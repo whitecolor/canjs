@@ -2648,7 +2648,14 @@ can.fixture.on = false;
 
 ### Third Party Extensions and Plugins
 
- - [TonfaJS](https://github.com/retro/Tonfa.js) - Glues CanJS and jQueryMobile together.
+__[TonfaJS](https://github.com/retro/Tonfa.js)__
+
+Glues CanJS and jQueryMobile together.
+
+__[canjs-rails](https://rubygems.org/gems/canjs-rails) __
+
+A Ruby gem that provides CanJS (for jQuery) for your Rails 3.1+ application. Download the gem or learn more
+by visiting the [rubygems.org](https://rubygems.org/gems/canjs-rails) site.
 
 ## Examples
 
@@ -2723,11 +2730,6 @@ ThemeRoller for Twitter Bootstrap built on CanJS.  Visit it at [bootswatchr.com]
 Mindjet Action is task mangement application built using CanJS.  Visit it at [action.mindjet.com](http://action.mindjet.com)
 
 ![action.mindjet.com](images/examples/cohuman.jpg "action.mindjet.com")
-
-### canjs-rails
-
-A Ruby gem that provides CanJS (for jQuery) for your Rails 3.1+ application. Download the gem or learn more
-by visiting the [rubygems.org](https://rubygems.org/gems/canjs-rails) site.
 
 ## Get Help
 
