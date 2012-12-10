@@ -2891,7 +2891,7 @@ CanJS's live-binding is very fast. It only updates what's necessary when it's ne
 In this test, CanJS has the fastest live-binding. Backbone and YUI are not doing 
 live-binding, but CanJS is still the fastest.  
 
-In the [popular counting circle example](http://jsfiddle.net/JMWf4/5/), 
+In the [popular counting circle example](http://jsfiddle.net/JMWf4/47/), 
 Knockout visually appears the fastest, followed by CanJS.
 
 This means that CanJS and Knockout are slightly faster at different things, but
