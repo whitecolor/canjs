@@ -3142,7 +3142,15 @@ __1.1.3__ ( December 11, 2012 )
 - add: [Add can.Observe.List.prototype.replace](https://github.com/bitovi/canjs/issues/194)
 - add: [Return resolved data models in view callback](https://github.com/bitovi/canjs/issues/183)
 
-__1.1.1__ ( November 28, 2012 )
+__1.1.2__ ( November 28, 2012 )
+
+- fix: [Solve issue when stealing mustache templates](https://github.com/bitovi/canjs/pull/175) - `can/view/mustache` returns `can` object now
+- fix: [Controls shouldn't bind to templated events that contain undefined values](https://github.com/bitovi/canjs/commit/e90bc56d9c1ec46ae01f084ccbcab43c9c611d0c)
+- fix: [Resetting a form changes input values to __!!__](https://github.com/bitovi/canjs/issues/166)
+- fix: [Further AMD build improvements](https://github.com/bitovi/canjs/issues/168)
+- fix: [Strange conversion of nested arrays to Observe.List](https://github.com/bitovi/canjs/issues/172)
+
+__1.1.1__ ( November 19, 2012 )
 
 - fix: [Solve issue when stealing mustache templates](https://github.com/bitovi/canjs/pull/175) - `can/view/mustache` returns `can` object now
 - fix: [Controls shouldn't bind to templated events that contain undefined values](https://github.com/bitovi/canjs/commit/e90bc56d9c1ec46ae01f084ccbcab43c9c611d0c)
