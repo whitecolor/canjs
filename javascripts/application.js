@@ -15,6 +15,7 @@ can.Control('Menu', {
 		}), 1)
 	},
 	'{window} scroll' : 'mark',
+	'{window} resize' : 'resizeMenu',
 
 	buildMenu : function(){
 		this.headings = this.element.find('h1,h2,h3');
@@ -223,16 +224,14 @@ can.Control('Menu', {
 		}, 1)
 	},
 	resizeMenu : function(){
-		var menuWrapHeight = this.element.find('#menu-wrapper').height(),
-			menuHeight     = this._menu.height(),
-			windowHeight   = $(window).height();
-		this.element.find('#inner-menu-wrap').css('maxHeight', (windowHeight - (menuWrapHeight - menuHeight) - 40) + "px");
-		if(this.element.find('#inner-menu-wrap').innerHeight() - menuHeight > 2){ // top and bottom borders
+		var otherElsHeight = ($('#header').outerHeight() + $('#feeder-wrap').outerHeight() + $('#buttons').outerHeight());
+		this.element.find('#inner-menu-wrap').css('maxHeight', ($(window).height() - otherElsHeight - 80) + "px");
+		/*if(this.element.find('#inner-menu-wrap').innerHeight() - menuHeight > 2){ // top and bottom borders
 			this._menuShouldScroll = true;
 		} else {
 			this._menuShouldScroll = false;
 			this._menu.css('marginTop', 0);
-		}
+		}*/
 	},
 	"#inner-menu-wrap mousemove" : function(el, ev){
 		/*if(!this._menuShouldScroll){
@@ -268,7 +267,7 @@ can.Control('Menu', {
 	positionActiveMenuItem : function(){
 		clearTimeout(this._positionTimeout);
 		this._positionTimeout = setTimeout(this.proxy(function(){
-			if(this._menuShouldScroll === false) return; // prevent scrolling if there is enough space
+			//if(this._menuShouldScroll === false) return; // prevent scrolling if there is enough space
 			if(animationCount === 0){
 				var active = this.element.find('#menu a.active');
 				if(active.length === 0){
@@ -277,6 +276,8 @@ can.Control('Menu', {
 				var activePos = active.position().top,
 						marginTop = parseInt(this._menu.css('marginTop'), 10),
 						wrapHeight = this.element.find('#inner-menu-wrap').height();
+
+
 
 				//console.log('TIEMOUT', marginTop);
 
@@ -300,9 +301,6 @@ can.Control('Menu', {
 			}
 		}), 1);
 
-	},
-	"{window} resize" : function(){
-		this.resizeMenu();
 	}
 });
 if($('.lt-ie7, .lt-ie8, .lt-ie9').length == 0){
