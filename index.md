@@ -1,7 +1,7 @@
 ---
 layout: default
 title: CanJS
-version : 1.1.2
+version : 1.1.3
 ---
 
 # Welcome to CanJS!
@@ -3121,10 +3121,26 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 ([1](https://github.com/bitovi/canjs/pull/23), [2](https://github.com/bitovi/canjs/pull/26))
 - [roelmonnens](https://twitter.com/roelmonnens)
 - [Craig Wickesser](https://github.com/mindscratch) ([1](https://github.com/bitovi/canjs/pull/188))
+- [Jeff Rose](https://github.com/jeffrose) ([1](https://github.com/bitovi/canjs/pull/201))
 
 for helping us with new features, bug fixes, and getting this out the door.
 
 ### Change Log
+
+__1.1.3__ ( December 11, 2012 )
+
+- fix: [Empty model displays __!!__ as input values](https://github.com/bitovi/canjs/issues/196)
+- fix: [Rendering models in tables produces different results than an equivalent observe](https://github.com/bitovi/canjs/issues/202)
+- fix: [`data` Mustache helper doesn't parse attribute properly](https://github.com/bitovi/canjs/issues/200)
+- fix: [Partial Mustache views assume the right parent tag for live-binding](https://github.com/bitovi/canjs/commit/492a22f7655d1ff15c37b95213252c87a264fe3e)
+- fix: [Mustache partials don't parse properly](https://github.com/bitovi/canjs/issues/199)
+- fix: [can.Control will fail to find $.event.special in a $.noConflict(true) scenario](https://github.com/bitovi/canjs/issues/191)
+- fix: [Nameless view renderers should return document fragment](https://github.com/bitovi/canjs/issues/195)
+- fix: [compute only updates once when a list's contents are replaced](https://github.com/bitovi/canjs/commit/9cb47dfabba5dbe3bef161e6aae4a5ce2965ac49)
+- add: [Updated jQuery hashchange plugin](https://github.com/bitovi/canjs/pull/201)
+- add: [Generate computes from an observe property](https://github.com/bitovi/canjs/issues/203)
+- add: [Add can.Observe.List.prototype.replace](https://github.com/bitovi/canjs/issues/194)
+- add: [Return resolved data models in view callback](https://github.com/bitovi/canjs/issues/183)
 
 __1.1.1__ ( November 28, 2012 )
 
