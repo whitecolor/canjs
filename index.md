@@ -2693,7 +2693,7 @@ Srchr searches several data sources for content and displays it to the user. It 
 
 [__View the App__](http://donejs.com/examples/srchr/index.html)
 
-[View the source on github](https://github.com/bitovi/srchr)
+[View the source on github](https://github.com/jupiterjs/srchr/tree/canjs)
 
 ### Contacts
 
