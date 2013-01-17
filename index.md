@@ -3067,7 +3067,7 @@ change [can/control/control.js](https://github.com/bitovi/canjs/blob/master/cont
 where you find the `destroy` comment.
  3. Generate the docs with:
 
-        js site/scripts/doc.js
+        ./js site/scripts/doc.js
     
     View them at `site/docs.html`
     
@@ -3077,7 +3077,7 @@ where you find the `destroy` comment.
 
 To make the CanJS builds, run:
 
-    js can/build/build.js
+    ./js can/build/build.js
     
 It puts the downloads in `can/dist/edge`.
 
