@@ -3077,7 +3077,7 @@ where you find the `destroy` comment.
 
 To make the CanJS builds, run:
 
-    js can/util/make.js
+    js can/build/build.js
     
 It puts the downloads in `can/dist/edge`.
 
