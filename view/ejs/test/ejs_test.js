@@ -1263,4 +1263,27 @@ test("Observe with array attributes", function() {
 	equal(div.getElementsByTagName('div')[0].innerHTML, 'Hello again', 'Check updated message');
 })
 
+
+// https://github.com/bitovi/canjs/issues/157
+test("Observe properties added after initialization do not live update properly in attributes", function() {
+	var renderer = can.view.ejs('asdf', '<img <% if (this.attr("image")) { %>src="<%=this.attr("image")%>"<% } %> alt="An image" /><%=this.attr("image")%>'),
+		url = 'http://farm8.staticflickr.com/7102/6999583228_99302b91ac_n.jpg',
+		data = new can.Observe({
+        user: 'Tina Fey',
+        messages: 0,
+// image: 'beep'
+    }),
+		div = document.createElement('div');
+		
+	div.appendChild(can.view('asdf', data));
+	
+	var img = div.getElementsByTagName('img')[0];
+	equal(img.hasAttribute('src'), false, 'Image should not have src');
+	
+	data.attr('messages', 5);
+	data.attr('image', url);
+	equal(img.hasAttribute('src'), true, 'Image should have src');
+	equal(img.src, url, 'Image should have src URL');
+});
+
 })();
