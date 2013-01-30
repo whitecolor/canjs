@@ -2725,11 +2725,18 @@ ThemeRoller for Twitter Bootstrap built on CanJS.  Visit it at [bootswatchr.com]
 
 ![bootswatchr.com](images/examples/bootswatchr.jpg "bootswatchr.com")
 
-### Mindjet Action
+### Mindjet Tasks
 
-Mindjet Action is task mangement application built using CanJS.  Visit it at [action.mindjet.com](http://action.mindjet.com)
+Mindjet Tasks is task mangement application built using CanJS.  
+
+Visit it at [action.mindjet.com](http://action.mindjet.com)
 
 ![action.mindjet.com](images/examples/cohuman.jpg "action.mindjet.com")
+
+Mindjet uses CanJS with Phonegap for Mobile Tasks on [iPhone](https://itunes.apple.com/us/app/mindjet-tasks/id514146535?mt=8) and 
+[Android](https://play.google.com/store/apps/details?id=com.mindjet.tasks&feature=related_apps#?t=W251bGwsMSwyLDEwOSwiY29tLm1pbmRqZXQudGFza3MiXQ..)
+
+![action.mindjet.com](images/examples/tasks.jpg "action.mindjet.com")
 
 ## Get Help
 
