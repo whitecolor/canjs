@@ -74,7 +74,7 @@ __[This Page](http://canjs.us)__ - Walks through the basics of CanJS by building
 small todo app with CanJS and jQuery:
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/donejs/5zpFz/embedded/result,html,js,css"
+        src="http://jsfiddle.net/5zpFz/90/embedded/result,html,js,css"
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
