@@ -2,7 +2,7 @@
 layout: default
 title: CanJS
 version: 1.1.4
-downloadUrl: http://canjs.us/downloads
+downloadUrl: http://canjs.us/release/1.1.4
 ---
 
 # Welcome to CanJS!
@@ -57,11 +57,11 @@ rich web applications easy. Use it because it's:
 CanJS's core supports jQuery, Zepto, Dojo, YUI and Mootools. Select your core download 
 below or select the individual plugins above and click download:
 
- - [can.jquery.js]({{page.downloadUrl}}/can.jquery-{{page.version}}.js) ([min]({{page.downloadUrl}}/can.jquery-{{page.version}}.min.js))
- - [can.zepto.js]({{page.downloadUrl}}/can.zepto-{{page.version}}.js) ([min]({{page.downloadUrl}}/can.zepto-{{page.version}}.min.js))
- - [can.dojo.js]({{page.downloadUrl}}/can.dojo-{{page.version}}.js) ([min]({{page.downloadUrl}}/can.dojo-{{page.version}}.min.js))
- - [can.mootools.js]({{page.downloadUrl}}/can.mootools-{{page.version}}.js) ([min]({{page.downloadUrl}}/can.mootools-{{page.version}}.min.js))
- - [can.yui.js]({{page.downloadUrl}}/can.yui-{{page.version}}.js) ([min]({{page.downloadUrl}}/can.yui-{{page.version}}.min.js))
+ - [can.jquery.js]({{page.downloadUrl}}/can.jquery.js) ([min]({{page.downloadUrl}}/can.jquery.min.js))
+ - [can.zepto.js]({{page.downloadUrl}}/can.zepto.js) ([min]({{page.downloadUrl}}/can.zepto.min.js))
+ - [can.dojo.js]({{page.downloadUrl}}/can.dojo.js) ([min]({{page.downloadUrl}}/can.dojo.min.js))
+ - [can.mootools.js]({{page.downloadUrl}}/can.mootools.js) ([min]({{page.downloadUrl}}/can.mootools.min.js))
+ - [can.yui.js]({{page.downloadUrl}}/can.yui.js) ([min]({{page.downloadUrl}}/can.yui.min.js))
 
 The [Using CanJS](#using_canjs)
 section details the minor differences among use 
