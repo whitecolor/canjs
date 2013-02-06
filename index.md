@@ -3100,7 +3100,8 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 ([1](https://github.com/bitovi/canjs/commit/8193e359cde3b77a44c683ca9f8a5268fc9df44b),
 [2](https://github.com/bitovi/canjs/commit/b865588710e7e7dd8a9588ebf8e8c0f4d19fd800),
 [3](https://github.com/bitovi/canjs/commit/83a48e7bcb05ed9f179159f540b181db4dcf6e9c),
-[4](https://github.com/Spredfast/canjs/commit/dc7ddd2dc619619f3955c31be1435c6f927b7a35))
+[4](https://github.com/Spredfast/canjs/commit/dc7ddd2dc619619f3955c31be1435c6f927b7a35),
+[5](https://github.com/bitovi/canjs/pull/214))
 - [thecountofzero](https://github.com/thecountofzero)
 ([1](https://github.com/bitovi/canjs/commit/e920434fa53975013688d065ce2e304f225fae75),
 [2](https://github.com/bitovi/canjs/commit/8e98186e00b7d6b88869baeb97244877f143034e))
@@ -3119,7 +3120,8 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 - [Max Sadrieh](https://github.com/ms)
 ([1](https://github.com/bitovi/canjs/commit/06c5a4b3d50d14c5881ee55642fa10f37b71af0b))
 - [dimaf](https://github.com/dimaf)
-([1](https://github.com/bitovi/canjs/commit/fc8a4d57c99a280025eb7c613cef92de28c3c160))
+([1](https://github.com/bitovi/canjs/commit/fc8a4d57c99a280025eb7c613cef92de28c3c160),
+[2](https://github.com/bitovi/canjs/pull/145))
 - [yusufsafak](https://github.com/yusufsafak) ([1](https://github.com/bitovi/canjs/pull/30))
 - [verto](https://github.com/verto) ([1](https://github.com/bitovi/canjs/pull/32))
 - [WearyMonkey](https://github.com/WearyMonkey) ([1](https://github.com/bitovi/canjs/issues/27))
@@ -3132,6 +3134,37 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 for helping us with new features, bug fixes, and getting this out the door.
 
 ### Change Log
+
+__1.1.4__ ( February 5, 2013 )
+
+- fix: [Haschange binding and route ready for all libraries](https://github.com/bitovi/canjs/pull/265)
+- fix: [Get converters and .attr working the right way with nested objects](https://github.com/bitovi/canjs/issues/264)
+- fix: [CanJS/ejs table+tbody rendering of a list gives nested tbody items](https://github.com/bitovi/canjs/pull/233)
+- fix: [Mustache: Inconsistent treatment of function attributes](https://github.com/bitovi/canjs/issues/231)
+- fix: [EJS renders "@@!!@@" instead of Model data when a Deferred is passed into can.view that takes a long time to resolve](https://github.com/bitovi/canjs/issues/230)
+- fix: [Mustache: registered helpers do not create the context stack correctly](https://github.com/bitovi/canjs/issues/228)
+- fix: [Mustache: only the current context is passed to partials, instead of the full stack](https://github.com/bitovi/canjs/issues/227)
+- fix: [IE8 error when setting up observe list](https://github.com/bitovi/canjs/pull/226)
+- fix: [Resetting a live-bound <textarea> changes its value to __!!__](https://github.com/bitovi/canjs/pull/223)
+- fix: [hashchange binding still broken in mootools](https://github.com/bitovi/canjs/issues/216)
+- fix: [can.Mustache - with context lost in nested sections](https://github.com/bitovi/canjs/issues/215)
+- fix: [Enabled passing in helpers and partials to Mustache views](https://github.com/bitovi/canjs/pull/214), ([1](https://github.com/bitovi/canjs/pull/260))
+- fix: [Make the resolved data available when using can.view](https://github.com/bitovi/canjs/issues/209)
+- fix: [.attr method doesn't merge nested objects](https://github.com/bitovi/canjs/pull/207)
+- fix: [Live binding on observe.lists nested in an observe doesn't work](https://github.com/bitovi/canjs/issues/204)
+- fix: [Attributes/Converters Issue](https://github.com/bitovi/canjs/issues/174)
+- fix: [Observe.List push/unshift doesn't fire when sort comparator is set](https://github.com/bitovi/canjs/issues/170)
+- fix: [Observe.List sort doesn't use custom method passed](https://github.com/bitovi/canjs/issues/169)
+- fix: [test&fix: null values crashing validations](https://github.com/bitovi/canjs/pull/145)
+- fix: [EJS rendering null value](https://github.com/bitovi/canjs/pull/118)
+- fix: [can.Observe sort plugin doesn't trigger add events](https://github.com/bitovi/canjs/issues/205)
+- fix: [Observe.List sort plugin erroring on item removal](https://github.com/bitovi/canjs/pull/88)
+- fix: [Live binding on observe.lists nested in an observe doesn't work](https://github.com/bitovi/canjs/issues/204)
+- fix: [Observe.List sort doesn't use custom method passed](https://github.com/bitovi/canjs/issues/169)
+- add: [removeAttr can.Model attribute](https://github.com/bitovi/canjs/pull/245)
+- add: [Calling destroy on non persisted model](https://github.com/bitovi/canjs/pull/181)
+- add: [jQuery 1.9.x support](https://github.com/bitovi/canjs/pull/237)
+- add: [Mustache Helpers that accept computes and return an element should work](https://github.com/bitovi/canjs/issues/254)
 
 __1.1.3__ ( December 11, 2012 )
 
