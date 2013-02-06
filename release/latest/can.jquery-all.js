@@ -5446,7 +5446,7 @@ module['can/route/route.js'] = (function (can) {
 
 	// Libraries other than jQuery don't execute the document `ready` listener
 	// if we are already DOM ready
-	if (document.readyState === 'complete' && onready) {
+	if ((document.readyState === 'complete' || document.readyState === "interactive") && onready) {
 		can.route.ready();
 	}
 
