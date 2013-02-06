@@ -3094,7 +3094,8 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 ([1](https://github.com/bitovi/canjs/commit/8193e359cde3b77a44c683ca9f8a5268fc9df44b),
 [2](https://github.com/bitovi/canjs/commit/b865588710e7e7dd8a9588ebf8e8c0f4d19fd800),
 [3](https://github.com/bitovi/canjs/commit/83a48e7bcb05ed9f179159f540b181db4dcf6e9c),
-[4](https://github.com/Spredfast/canjs/commit/dc7ddd2dc619619f3955c31be1435c6f927b7a35))
+[4](https://github.com/Spredfast/canjs/commit/dc7ddd2dc619619f3955c31be1435c6f927b7a35),
+[5](https://github.com/bitovi/canjs/pull/214))
 - [thecountofzero](https://github.com/thecountofzero)
 ([1](https://github.com/bitovi/canjs/commit/e920434fa53975013688d065ce2e304f225fae75),
 [2](https://github.com/bitovi/canjs/commit/8e98186e00b7d6b88869baeb97244877f143034e))
@@ -3113,7 +3114,8 @@ off JavaScriptMVC.  This page is for contributors after CanJS's launch. Thank yo
 - [Max Sadrieh](https://github.com/ms)
 ([1](https://github.com/bitovi/canjs/commit/06c5a4b3d50d14c5881ee55642fa10f37b71af0b))
 - [dimaf](https://github.com/dimaf)
-([1](https://github.com/bitovi/canjs/commit/fc8a4d57c99a280025eb7c613cef92de28c3c160))
+([1](https://github.com/bitovi/canjs/commit/fc8a4d57c99a280025eb7c613cef92de28c3c160),
+[2](https://github.com/bitovi/canjs/pull/145))
 - [yusufsafak](https://github.com/yusufsafak) ([1](https://github.com/bitovi/canjs/pull/30))
 - [verto](https://github.com/verto) ([1](https://github.com/bitovi/canjs/pull/32))
 - [WearyMonkey](https://github.com/WearyMonkey) ([1](https://github.com/bitovi/canjs/issues/27))
