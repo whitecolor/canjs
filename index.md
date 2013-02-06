@@ -74,7 +74,7 @@ __[This Page](http://canjs.us)__ - Walks through the basics of CanJS by building
 small todo app with CanJS and jQuery:
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/donejs/5zpFz/embedded/result,html,js,css"
+        src="http://jsfiddle.net/5zpFz/90/embedded/result,html,js,css"
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -2670,7 +2670,7 @@ make sure you checkout [CanJS Recipes](http://canjs.us/recipes.html)
 [TodoMVC](http://todomvc.com/) implements the same Todo application in many different JavaScript MVC frameworks.
 There are two examples for CanJS, one for using CanJS with jQuery and the other for CanJS with jQuery and RequireJS:
 
-- [CanJS](http://todomvc.com/labs/architecture-examples/canjs/) ([GitHub](https://github.com/addyosmani/todomvc/tree/gh-pages/labs/architecture-examples/canjs))
+- [CanJS](http://todomvc.com/architecture-examples/canjs/) ([GitHub](https://github.com/addyosmani/todomvc/tree/gh-pages/architecture-examples/canjs))
 - [CanJS + RequireJS](https://github.com/bitovi/todomvc/tree/gh-pages/labs/dependency-examples/canjs_require)
 
 ### CanPlay
@@ -2693,7 +2693,7 @@ Srchr searches several data sources for content and displays it to the user. It 
 
 [__View the App__](http://donejs.com/examples/srchr/index.html)
 
-[View the source on github](https://github.com/bitovi/srchr)
+[View the source on github](https://github.com/jupiterjs/srchr/tree/canjs)
 
 ### Contacts
 
@@ -2725,11 +2725,16 @@ ThemeRoller for Twitter Bootstrap built on CanJS.  Visit it at [bootswatchr.com]
 
 ![bootswatchr.com](images/examples/bootswatchr.jpg "bootswatchr.com")
 
-### Mindjet Action
+### Mindjet Tasks
 
-Mindjet Action is task mangement application built using CanJS.  Visit it at [action.mindjet.com](http://action.mindjet.com)
+[Mindjet Tasks](http://action.mindjet.com) is task mangement application built using CanJS
 
 ![action.mindjet.com](images/examples/cohuman.jpg "action.mindjet.com")
+
+Mindjet uses CanJS with Phonegap for Mobile Tasks on [iPhone](https://itunes.apple.com/us/app/mindjet-tasks/id514146535?mt=8) and 
+[Android](https://play.google.com/store/apps/details?id=com.mindjet.tasks&feature=related_apps#?t=W251bGwsMSwyLDEwOSwiY29tLm1pbmRqZXQudGFza3MiXQ..)
+
+![action.mindjet.com](images/examples/tasks.jpg "action.mindjet.com")
 
 ## Get Help
 
@@ -3067,7 +3072,7 @@ change [can/control/control.js](https://github.com/bitovi/canjs/blob/master/cont
 where you find the `destroy` comment.
  3. Generate the docs with:
 
-        js site/scripts/doc.js
+        ./js site/scripts/doc.js
     
     View them at `site/docs.html`
     
@@ -3077,7 +3082,7 @@ where you find the `destroy` comment.
 
 To make the CanJS builds, run:
 
-    js can/util/make.js
+    ./js can/build/build.js
     
 It puts the downloads in `can/dist/edge`.
 
