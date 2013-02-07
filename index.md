@@ -1994,7 +1994,7 @@ CanJS can be used with jQuery, Dojo, Mootools, YUI and Zepto and as AMD modules 
 
 ### AMD
 
-The [CanJS Download]({{page.downloadUrl}}/can.js.{{page.version}}.zip) contains an `amd` folder which allows
+The [CanJS Download](http://canjs.us/downloads/can.js.{{page.version}}.zip) contains an `amd` folder which allows
 you to load any CanJS component and plugin using an AMD module loader like [RequireJS](http://requirejs.org/).
 jQuery will be the default library so make sure the `jquery` module id points to the jQuery source.
 Here is an example for jQuery and RequireJS:
@@ -2702,9 +2702,9 @@ Srchr searches several data sources for content and displays it to the user. It 
 
 A contacts manager application built to accompany the 3 part Nettuts+ __"Diving into CanJS"__ tutorial series. This application is meant to introduce people to the core concepts of CanJS like Controls, Models, Views, Observables and Routing.
 
-- __Part 1__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part1/) | [Download](https://github.com/downloads/ccummings/canjs-contacts-tutorial/part1.zip)
-- __Part 2__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs-part-2/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part2/) | [Download](https://github.com/downloads/ccummings/canjs-contacts-tutorial/part2.zip)
-- __Part 3__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs-part-3/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part3/) | [Download](https://github.com/downloads/ccummings/canjs-contacts-tutorial/part3.zip)
+- __Part 1__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part1/) | [Download](http://canjs.us/downloads/canjs-contacts-tutorial/part1.zip)
+- __Part 2__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs-part-2/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part2/) | [Download](http://canjs.us/downloads/canjs-contacts-tutorial/part2.zip)
+- __Part 3__: [Tutorial](http://net.tutsplus.com/tutorials/javascript-ajax/diving-into-canjs-part-3/) | [Demo](http://ccummings.github.com/canjs-contacts-tutorial/part3/) | [Download](http://canjs.us/downloads/canjs-contacts-tutorial/part3.zip)
 
 [View the source on github](https://github.com/ccummings/canjs-contacts-tutorial)
 
