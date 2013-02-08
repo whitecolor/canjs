@@ -95,7 +95,7 @@ __Annotated Source__ - for [jQuery](http://canjs.us/release/latest/docs/can.jque
 [MooTools](http://canjs.us/release/latest/docs/can.mootools.html),
 [YUI](http://canjs.us/release/latest/docs/can.yui.html)
 
-__[Test Suite](http://ci.javascriptmvc.com/jobs/can/test/test.html)__ - See how we poke around the API.
+__[Test Suite](http://donejs.com/can/test/test.html)__ - See how we poke around the API.
 
 ## can.Construct `can.Construct( [classProperties,] [prototypeProperties] )`
 
