@@ -1049,7 +1049,7 @@ var frag = can.view("#template", {todos: list}, {
 Note that if a `can.Observe` attribute is passed as an argument to a helper, it is converted to a `can.compute` getter/setter function.  For example in your template:
 
 {% highlight html %}
-  <div>{{addPrefix name}}</div>
+  <div>{{"{{"}}addPrefix name}}</div>
 {% endhighlight %}
 
 Your helper would look like:
@@ -1074,7 +1074,7 @@ To register a global helper, use the `can.Mustache.registerHelper` method.
 Any Mustache template can access it like:
 
 {% highlight html %}
-  <div>{{l10n 'JavaScript'}}</div>
+  <div>{{"{{"}}l10n 'JavaScript'}}</div>
 {% endhighlight %}
 
 #### Element Callbacks
