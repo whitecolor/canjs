@@ -1026,6 +1026,93 @@ Mustache has 3 different types of magic tags:
  - `{{"{{"}}{ }}}` Mustache will un-escape values enclosed in these tags.
  - `{{"{{"}}! }}` Mustache will ignore values enclosed in these tags.
 
+### Helpers
+
+[Helpers](http://donejs.com/docs.html#!Helpers) allow you to register functions that 
+can be called from any context in a template.  Since Mustache templates are "logic-less", 
+all your logic will be contained in helper functions.
+
+#### Adding Helpers
+
+To register a helper local to the template you're rendering, pass a `helpers` object as the third param of `can.view`:
+
+{% highlight javascript %}
+var frag = can.view("#template", {todos: list}, {
+  canCheck: function(val){
+    if(val){
+      return options.fn(this)
+    }
+  }
+});
+{% endhighlight %}
+
+Note that if a `can.Observe` attribute is passed as an argument to a helper, it is converted to a `can.compute` getter/setter function.  For example in your template:
+
+{% highlight html %}
+  <div>{{addPrefix name}}</div>
+{% endhighlight %}
+
+Your helper would look like:
+
+{% highlight javascript %}
+var item = new can.Observe({name: "Brian"}),
+    frag = can.view("#template", item, {
+      addPrefix: function(name){
+        return "Mr." + name()
+      }
+    });
+{% endhighlight %}
+
+To register a global helper, use the `can.Mustache.registerHelper` method.
+
+{% highlight javascript %}
+  can.Mustache.registerHelper('l10n', function(str, options){
+    return (Globalize != undefined ? Globalize.localize(str) : str);
+  });
+{% endhighlight %}
+
+Any Mustache template can access it like:
+
+{% highlight html %}
+  <div>{{l10n 'JavaScript'}}</div>
+{% endhighlight %}
+
+#### Element Callbacks
+
+When rendering the view, it's common to want to call some JavaScript
+on a specific element such as intializing a jQuery plugin on the new HTML.
+Mustache makes this easy  to define this code in the mark-up using [ES5 Arrow Syntax](http://wiki.ecmascript.org/doku.php?id=strawman:arrow_function_syntax).  For example:
+
+{% highlight html %}
+  <div class="tabs" {{"{{"}}(el) -> el.jquery_tabs()}}></div>
+{% endhighlight %}
+
+#### Data Helpers
+
+Associating data to an element is easy in Mustache.  Call the `data`
+helper followed by the attribute name you want to attach it as.  For example:
+
+{% highlight javascript %}
+  {
+    name: 'Austin'
+  }
+{% endhighlight %}
+
+{% highlight html %}
+  <ul>
+    <li id="personli" {{"{{"}}data 'person'}}>{{"{{"}}name}}</li>
+  </ul>
+{% endhighlight %}
+
+Now I can access my object by doing:
+
+{% highlight javascript %}
+  var nameObject = can.data(can.$('#personli'), 'name');
+{% endhighlight %}
+
+It automatically attaches the data to the
+element using `can.data` with implied context of `this`.
+
 ### Keys and Sections
 
 Mustache HTML contains keys for inserting data into the template
@@ -1258,62 +1345,6 @@ The resulting expanded template at render time would look like:
   {{"{{#"}}names}}
     <strong>{{"{{"}}name}}</strong>
   {{"{{/"}}names}}
-{% endhighlight %}
-
-### Helpers
-
-[Helpers](http://donejs.com/docs.html#!Helpers) allow you to register functions that 
-can be called from any context in a template.
-
-#### Element Callbacks
-
-When rendering the view, it's common to want to call some JavaScript
-on a specific element such as intializing a jQuery plugin on the new HTML.
-Mustache makes this easy  to define this code in the mark-up using [ES5 Arrow Syntax](http://wiki.ecmascript.org/doku.php?id=strawman:arrow_function_syntax).  For example:
-
-{% highlight html %}
-  <div class="tabs" {{"{{"}}(el) -> el.jquery_tabs()}}></div>
-{% endhighlight %}
-
-#### Data Helpers
-
-Associating data to an element is easy in Mustache.  Call the `data`
-helper followed by the attribute name you want to attach it as.  For example:
-
-{% highlight javascript %}
-  {
-    name: 'Austin'
-  }
-{% endhighlight %}
-
-{% highlight html %}
-  <ul>
-    <li id="personli" {{"{{"}}data 'person'}}>{{"{{"}}name}}</li>
-  </ul>
-{% endhighlight %}
-
-Now I can access my object by doing:
-
-{% highlight javascript %}
-  var nameObject = can.data(can.$('#personli'), 'name');
-{% endhighlight %}
-
-It automatically attaches the data to the
-element using `can.data` with implied context of `this`.
-
-#### Registering Helpers
-
-To register your own helper, use the `can.Mustache.registerHelper` method.
-
-Localization is a good example of a custom helper you might implement
-in your application. The below example takes a given key and
-returns the localized value using
-[jQuery Globalize](https://github.com/jquery/globalize).
-
-{% highlight javascript %}
-  can.Mustache.registerHelper('l10n', function(str, options){
-    return (Globalize != undefined ? Globalize.localize(str) : str);
-  });
 {% endhighlight %}
 
 ## can.Control `can.Control(classProps, prototypeProps)`
