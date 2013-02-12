@@ -1482,7 +1482,7 @@ var Todos = can.Control({
     });
   },
   'li click': function( li ) {
-    li.trigger( 'selected', li.model() );
+    li.trigger( 'selected', li.data( 'todo' ) );
   },
   'li .destroy click': function( el, ev ) {
     // get the li element that has todo data
@@ -1578,7 +1578,7 @@ var Todos = can.Control({
     })
   },
   'li click': function( li ) {
-    li.trigger( 'selected', li.model() );
+    li.trigger( 'selected', li.data( 'todo' ) );
   },
   'li .destroy click': function( el, ev ) {
     // get the li element that has todo data
