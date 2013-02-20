@@ -186,7 +186,7 @@ overlapping parts of the route. The app lets the user select a type of issue, sh
 and select a issue and see details about that issue.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/YRXHV/16/embedded/result,html,js,css" 
+        src="http://jsfiddle.net/moschel/YRXHV/21/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -272,7 +272,7 @@ shows two task lists of overlaping data.  Notice how the __"do dishes"__ is list
 twice. But if you click one "do dishes" checkbox, it updates the other.
 
 <iframe style="width: 100%; height: 300px"
-        src="http://jsfiddle.net/pCtxs/11/embedded/result,html,js,css" 
+        src="http://jsfiddle.net/moschel/pCtxs/15/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -318,7 +318,7 @@ your data persist offline. Storing your responses in `localStorage` allows you
 to get data to the view as quickly as possible.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/ralphholzmann/73Xuk/5/embedded/result%2Cjs/" 
+        src="http://jsfiddle.net/moschel/73Xuk/14/embedded/result%2Cjs/" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -352,7 +352,7 @@ can select a todo and edit it's text.  You can also delete a todo.  The app is
 also history enabled, letting you move forward and back through different todos.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/donejs/5zpFz/embedded/result,html,js,css"
+        src="http://jsfiddle.net/moschel/5zpFz/94/embedded/result,html,js,css"
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
