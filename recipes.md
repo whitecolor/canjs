@@ -28,22 +28,22 @@ The following recipes builds a simple tabs widget.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 It creates a `Tabs` constructor function that shows and hides tabs
-when it's `<li>`'s are clicked.
+when it's `&lt;li&gt;`'s are clicked.
 
-When `new Tabs()` is called, it adds `active` to the first `<li>`'s 
+When `new Tabs()` is called, it adds `active` to the first `&lt;li>`'s 
 className. Then, using the `tab` helper function, it hides the content for 
 all the other tab buttons.
 
-The `tab` helper function takes a `<li>` element like:
 
 {% highlight html %}
 <li><a href="#model">Model</a></li>
 {% endhighlight %}
 
-Then gets it's `<a>` element, and then uses it's href (`#model`) to get the
+Then gets it's `&lt;a&gt;` element, and then uses it's href (`#model`) to get the
 content div for that button.
 
 When a button is clicked, `Tabs` listens to it with:
@@ -54,6 +54,7 @@ When a button is clicked, `Tabs` listens to it with:
 
 This function, using the `tab` helper deactivates the active tab button and hides its content, 
 then it activates and shows the new tab button and tab content.
+</div>
 
 ### Tooltip
 
@@ -66,8 +67,9 @@ to see a tooltip, click somewhere else to remove it.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 This creates a `Tooltip` control that when created shows a tooltip.  When a `Tooltip` control
 is created, it positions the `Tooltip` element relative to the `relativeTo` option and 
 sets its inner html to the `html` option.
@@ -80,6 +82,7 @@ are automatically removed.  Templated event binding lets us listen to events out
 the element.  `"{window} click"` is a templated event binding.
 
 Events outside an element would normally not be removed, but they are with `can.Control`.
+</div>
 
 ## Routing
 
@@ -96,9 +99,11 @@ configured independently by can.route.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
-The HTML is structured such that each tab button has an `<a>` element with an 
+
+<div class="how_expanded">
+The HTML is structured such that each tab button has an `&lt;a&gt;` element with an 
 href property that matches the `id` attribute of the tab content 
 panel it should show.  This means that even if JavaScript was disabled,
 clicking a button would send the user to the tab panel (even though
@@ -178,6 +183,7 @@ This matches two-word routes seperated by a slash ("/").  Each word can be empty
 words are empty "#!/", the data will look 
 like: `{component: "model", person: "mihael"}`.  If the words are non-empty, that word
 will replace the default value.
+</div>
 
 ### Observe Backed Routes
 
@@ -190,8 +196,9 @@ and select a issue and see details about that issue.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 This functionality is broken down 
 into __Nav__, __Issues__, and __Details__ can.controls.  Here's how
 each part works:
@@ -233,8 +240,7 @@ issue in the list like:
 {% endhighlight %}
 
 And updates the details panel.
-
-
+</div>
 
 ## Live Binding
 
@@ -277,8 +283,9 @@ twice. But if you click one "do dishes" checkbox, it updates the other.
         frameborder="0">JSFiddle</iframe>
 
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 The code first sets up a `can.fixture` to return different, but overlapping lists of 
 tasks from the server.  The fixture returns data from the following calls:
 
@@ -304,9 +311,10 @@ the [id](http://donejs.com/docs.html#!can.Model.static.id) property already exis
 does, it uses that instance. 
 
 This means that the `criticalTasks` list and `todaysTasks` list both point to the 
-same instance. When `can.EJS` does it's live binding on `<%= task.attr("complete") ? "checked" : "" %>`
+same instance. When `can.EJS` does it's live binding on `&lt;%= task.attr("complete") ? "checked" : "" %&gt;`
 it's actually binding on the same "do dishes" intance once.  So updating "do dishes" updates
 the DOM in two places!
+</div>
 
 ### Caching Data in Local Storage
 
@@ -322,8 +330,9 @@ to get data to the view as quickly as possible.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 When creating your base model for other models to extend from, you can prefix 
 static service methods with `make`, to allow the base model to define how the 
 extending model's method will behave. In this example, our base model implements
@@ -340,6 +349,7 @@ EJS's live binding. Because the live binding will automatically update the view 
 bound model gets updated, we can write our code as usual and allow the base model
 to deliver `localStorage` data instantly, while automatically upating with responses
 from the server, with no extra effort.
+</div>
 
 ## Everything Together
 
@@ -357,8 +367,9 @@ also history enabled, letting you move forward and back through different todos.
         frameborder="0">JSFiddle</iframe>
 
 
-___How it works___
+___<a href="javascript:void(0)" class="how">How it works</a>___
 
+<div class="how_expanded">
 <iframe width="640" height="480" src="http://www.youtube.com/embed/PfTbkzh07iE" 
 frameborder="0" allowfullscreen="allowfullscreen">YouTube</iframe>
 
@@ -372,8 +383,8 @@ on an element via `new Todos("#todos")` it uses the `Todo` model to findAll todo
 renders them with `todosEJS` and inserts them into the `Todos` control instance's element.
 
 The template `todosEJS` iterates through each todo instance using `list`.  For each todo,
-it creates an `<li>` element.  It adds the instance's data to the `<li>` element's `$.data` 
-with: `<%= (el) -> el.data('todo',todo) %>`.  Within each `<li>` it creates a
+it creates an `&lt;li&gt;` element.  It adds the instance's data to the `&lt;li&gt;` element's `$.data` 
+with: `<%= (el) -> el.data('todo',todo) %>`.  Within each `&lt;li&gt;` it creates a
 checkbox, span to contain the name, and destroy link.  EJS's live-binding will be used to
 update the checkbox's `checked` attribute, the span's class attribute, and the span's content.
 
@@ -428,5 +439,5 @@ editor, loads that Todo with the model, and passed it to the editor.
 
 `Routing` also listens to an `"li selected"` event.  This is the event created by 
 the `Todos` control.  When this event happens, `Routing` updates the hash with the select todo's id.
-
+</div>
 

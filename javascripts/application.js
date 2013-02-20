@@ -380,6 +380,12 @@ can.Control('Builder', {
 
 new Builder('#builder');
 new FeederWidget('#feeder-latest');
+
+// show How It Works in Recipe page
+$(".how").click(function(ev){
+	$(ev.target).closest("p").next(".how_expanded").toggle()
+})
+
 // google analytics
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-2302003-11']);

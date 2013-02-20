@@ -481,3 +481,6 @@ html.lt-ie7 .github-fork img {
 	color: #006FB8;
 	text-decoration: underline;
 }
+.how_expanded{
+	display:none;
+}
