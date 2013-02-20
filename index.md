@@ -1425,7 +1425,7 @@ new Todos( $('#todos'), { view: 'specialTodos.ejs' } )
 
 ### element `this.element`
 
-[this.element](http://donejs.com/docs.html#!can.Controll.prototype.element) is the 
+[this.element](http://donejs.com/docs.html#!can.Control.prototype.element) is the 
 NodeList of a single element, the element the control is created on. 
 
 {% highlight javascript %}
