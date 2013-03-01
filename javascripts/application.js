@@ -383,7 +383,7 @@ new FeederWidget('#feeder-latest');
 
 // show How It Works in Recipe page
 $(".how").click(function(ev){
-	$(ev.target).closest("p").next(".how_expanded").toggle()
+	$(ev.target).next(".how_expanded").toggle()
 })
 
 // google analytics
