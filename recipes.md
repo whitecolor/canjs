@@ -488,7 +488,7 @@ editor, loads that Todo with the model, and passed it to the editor.
 the `Todos` control.  When this event happens, `Routing` updates the hash with the select todo's id.
 </div>
 
-## Paginated Grid with Buttons
+### Paginated Grid with Buttons
 
 Paginate through a list of links. This recipe shows how to use `can.Observe` can `can.compute` to
 organize client state and pass it to child controls.
