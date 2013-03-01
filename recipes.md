@@ -28,7 +28,7 @@ The following recipes builds a simple tabs widget.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 It creates a `Tabs` constructor function that shows and hides tabs
@@ -67,7 +67,7 @@ to see a tooltip, click somewhere else to remove it.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 This creates a `Tooltip` control that when created shows a tooltip.  When a `Tooltip` control
@@ -95,7 +95,8 @@ in a smart way to manage the state of the widget.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___[How it works](http://bitovi.com/blog/2013/01/weekly-widget-tree-combo.html)___
+
+[How it works](http://bitovi.com/blog/2013/01/weekly-widget-tree-combo.html)
 
 
 
@@ -114,7 +115,7 @@ configured independently by can.route.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 
 <div class="how_expanded">
@@ -211,7 +212,7 @@ and select a issue and see details about that issue.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 This functionality is broken down 
@@ -293,7 +294,7 @@ input.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___[How it works](http://bitovi.com/blog/2013/01/weekly-widget-two-way-mustache-helpers.html)___
+[How it works](http://bitovi.com/blog/2013/01/weekly-widget-two-way-mustache-helpers.html)
 
 ## Models
 
@@ -312,7 +313,7 @@ twice. But if you click one "do dishes" checkbox, it updates the other.
         frameborder="0">JSFiddle</iframe>
 
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 The code first sets up a `can.fixture` to return different, but overlapping lists of 
@@ -359,7 +360,7 @@ to get data to the view as quickly as possible.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 When creating your base model for other models to extend from, you can prefix 
@@ -414,7 +415,7 @@ also history enabled, letting you move forward and back through different todos.
         frameborder="0">JSFiddle</iframe>
 
 
-___<a href="javascript:void(0)" class="how">How it works</a>___
+<a href="javascript:void(0)" class="how">How it works</a>
 
 <div class="how_expanded">
 <iframe width="640" height="480" src="http://www.youtube.com/embed/PfTbkzh07iE" 
@@ -498,4 +499,4 @@ organize client state and pass it to child controls.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-___[How it works](http://bitovi.com/blog/2013/02/weekly-widget-paginated-grid.html)___
+[How it works](http://bitovi.com/blog/2013/02/weekly-widget-paginated-grid.html)
