@@ -461,9 +461,12 @@ the `Todos` control.  When this event happens, `Routing` updates the hash with t
 
 ## Paginated Grid with Buttons
 
+Paginate through a list of links. This recipe shows how to use `can.Observe` can `can.compute` to
+organize client state and pass it to child controls.
+
 <iframe style="width: 100%; height: 300px" 
         src="http://jsfiddle.net/SyEXx/4/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
-[How it works](http://bitovi.com/blog/2013/02/weekly-widget-paginated-grid.html)
+___[How it works](http://bitovi.com/blog/2013/02/weekly-widget-paginated-grid.html)___
