@@ -459,3 +459,11 @@ editor, loads that Todo with the model, and passed it to the editor.
 the `Todos` control.  When this event happens, `Routing` updates the hash with the select todo's id.
 </div>
 
+## Paginated Grid with Buttons
+
+<iframe style="width: 100%; height: 300px" 
+        src="http://jsfiddle.net/SyEXx/4/embedded/result,html,js,css" 
+        allowfullscreen="allowfullscreen" 
+        frameborder="0">JSFiddle</iframe>
+
+[How it works](http://bitovi.com/blog/2013/02/weekly-widget-paginated-grid.html)
