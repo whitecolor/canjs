@@ -84,6 +84,21 @@ the element.  `"{window} click"` is a templated event binding.
 Events outside an element would normally not be removed, but they are with `can.Control`.
 </div>
 
+
+### TreeCombo
+
+Select multiple items in a tree-like structure. This control uses `can.Observe.List` and `can.compute`
+in a smart way to manage the state of the widget.
+
+<iframe style="width: 100%; height: 300px" 
+        src="http://jsfiddle.net/sTLhX/35/embedded/result,html,js,css" 
+        allowfullscreen="allowfullscreen" 
+        frameborder="0">JSFiddle</iframe>
+
+___[How it works](http://bitovi.com/blog/2013/01/weekly-widget-tree-combo.html)___
+
+
+
 ## Routing
 
 The following recipes explore using `can.route`.
