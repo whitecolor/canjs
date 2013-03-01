@@ -266,6 +266,20 @@ an observe, just a date.  Code with EJS becomes live naturally ... amazing.
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
+
+### 2-way binding Mustache helpers
+
+Learn how to make 2-way binding mustache helpers.  When you change the value of an input, it automatically
+changes the value of an observe.  When you change the value of the observe, it changes the value of the 
+input.
+
+<iframe style="width: 100%; height: 300px" 
+        src="http://jsfiddle.net/ztWS5/5/embedded/result,html,js,css" 
+        allowfullscreen="allowfullscreen" 
+        frameborder="0">JSFiddle</iframe>
+
+___[How it works](http://bitovi.com/blog/2013/01/weekly-widget-two-way-mustache-helpers.html)___
+
 ## Models
 
 The following recipes show how to use `can.Model` (and often the `can.fixture` plugin).
