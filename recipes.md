@@ -24,7 +24,7 @@ The following recipes explore making UI widgets with `can.control`.
 The following recipes builds a simple tabs widget.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/z2N5k/1/embedded/result,html,js,css" 
+        src="http://jsfiddle.net/wSaGm/1/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -63,7 +63,7 @@ explain how it keeps memory leaks from happening. Click on one of the items
 to see a tooltip, click somewhere else to remove it.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/d3T9c/1/embedded/result,html,js,css" 
+        src="http://jsfiddle.net/imjoshdean/2VQSb/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
@@ -208,7 +208,7 @@ overlapping parts of the route. The app lets the user select a type of issue, sh
 and select a issue and see details about that issue.
 
 <iframe style="width: 100%; height: 300px" 
-        src="http://jsfiddle.net/moschel/YRXHV/21/embedded/result,html,js,css" 
+        src="http://jsfiddle.net/2UL6R/1/embedded/result,html,js,css" 
         allowfullscreen="allowfullscreen" 
         frameborder="0">JSFiddle</iframe>
 
