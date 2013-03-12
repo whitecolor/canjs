@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -242,7 +242,8 @@ define(['can/util/can', 'mootools', 'can/util/event', 'can/util/fragment', 'can/
 	}
 	can.ajax = function (options) {
 		var d = can.Deferred(),
-			requestOptions = can.extend({}, options);
+			requestOptions = can.extend({}, options),
+			request;
 		// Map jQuery options to MooTools options.
 		for (var option in optionsMap) {
 			if (requestOptions[option] !== undefined) {
@@ -254,25 +255,26 @@ define(['can/util/can', 'mootools', 'can/util/event', 'can/util/fragment', 'can/
 		requestOptions.method = requestOptions.method || 'get';
 		requestOptions.url = requestOptions.url.toString();
 
-		var success = options.success,
-			error = options.error;
+		var success = options.onSuccess || options.success,
+			error = options.onFailure || options.error;
 
-		requestOptions.onSuccess = function (responseText, xml) {
-			var data = responseText;
-			if (options.dataType === 'json') {
-				data = eval("(" + data + ")")
-			}
+		requestOptions.onSuccess = function (response, xml) {
+			var data = response;
 			updateDeferred(request.xhr, d);
 			d.resolve(data, "success", request.xhr);
 			success && success(data, "success", request.xhr);
 		}
-		requestOptions.onError = function () {
+		requestOptions.onFailure = function () {
 			updateDeferred(request.xhr, d);
 			d.reject(request.xhr, "error");
 			error(request.xhr, "error");
 		}
 
-		var request = new Request(requestOptions);
+		if (options.dataType === 'json') {
+			request = new Request.JSON(requestOptions);
+		} else {
+			request = new Request(requestOptions);
+		}
 		request.send();
 		updateDeferred(request.xhr, d);
 		return d;

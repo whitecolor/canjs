@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -44,7 +44,7 @@ define(['can/util/library', 'can/observe'], function (can) {
 			// If we get a string, handle it.
 			if (typeof ajaxOb == "string") {
 				// If there's a space, it's probably the type.
-				var parts = ajaxOb.split(/\s/);
+				var parts = ajaxOb.split(/\s+/);
 				params.url = parts.pop();
 				if (parts.length) {
 					params.type = parts.pop();
@@ -67,9 +67,20 @@ define(['can/util/library', 'can/observe'], function (can) {
 			}, params));
 		},
 		makeRequest = function (self, type, success, error, method) {
-			var deferred, args = [self.serialize()],
-				// The model.
-				model = self.constructor,
+			var args;
+			// if we pass an array as `self` it it means we are coming from
+			// the queued request, and we're passing already serialized data
+			// self's signature will be: [self, serializedData]
+			if (can.isArray(self)) {
+				args = self[1];
+				self = self[0];
+			} else {
+				args = self.serialize();
+			}
+			args = [args];
+			var deferred,
+			// The model.
+			model = self.constructor,
 				jqXHR;
 
 			// `destroy` does not need data.
@@ -213,6 +224,7 @@ define(['can/util/library', 'can/observe'], function (can) {
 				this._url = this._shortName + "/{" + this.id + "}"
 			},
 			_ajax: ajaxMaker,
+			_makeRequest: makeRequest,
 			_clean: function () {
 				this._reqs--;
 				if (!this._reqs) {

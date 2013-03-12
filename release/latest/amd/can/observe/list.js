@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -77,7 +77,7 @@ define(['can/util/library', 'can/observe', 'can/observe/compute'], function (can
 					mapped.splice(index, 1, val);
 				});
 
-				mapped.push(compute());
+				mapped.splice(index, 0, compute());
 			}
 
 			this.forEach(generator);

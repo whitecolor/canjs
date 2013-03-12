@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -936,8 +936,10 @@ module['can/view/view.js'] = (function (can) {
 			}
 
 			if (can.isDeferred(result)) {
-				result.done(function (result, data) {
+				result.then(function (result, data) {
 					deferred.resolve.call(deferred, pipe(result), data);
+				}, function () {
+					deferred.fail.apply(deferred, arguments);
 				});
 				return deferred;
 			}
@@ -1082,6 +1084,8 @@ module['can/view/view.js'] = (function (can) {
 
 					// If there's a `callback`, call it back with the result.
 					callback && callback(result, dataCopy);
+				}, function () {
+					deferred.reject.apply(deferred, arguments)
 				});
 				// Return the deferred...
 				return deferred;
@@ -1541,7 +1545,7 @@ module['can/view/scanner.js'] = (function (can) {
 					case '>':
 						htmlTag = 0;
 						// content.substr(-1) doesn't work in IE7/8
-						var emptyElement = content.substr(content.length - 1) == "/";
+						var emptyElement = content.substr(content.length - 1) == "/" || content.substr(content.length - 2) == "--";
 						// if there was a magic tag
 						// or it's an element that has text content between its tags, 
 						// but content is not other tags add a hookup
@@ -1992,7 +1996,7 @@ module['can/view/render.js'] = (function (can) {
 		},
 		getAttr = function (el, attrName) {
 			// Default to a blank string for IE7/8
-			return (attrMap[attrName] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
+			return (attrMap[attrName] && el[attrMap[attrName]] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
 		},
 		removeAttr = function (el, attrName) {
 			if (can.inArray(attrName, bool) > -1) {
@@ -3024,6 +3028,11 @@ module['can/view/mustache/mustache.js'] = (function (can) {
 				// Check the context for the reference
 				value = contexts[i];
 
+				// Is the value a compute?
+				if (can.isFunction(value) && value.isComputed) {
+					value = value();
+				}
+
 				// Make sure the context isn't a failed object before diving into it.
 				if (value !== undefined) {
 					for (j = 0; j < namesLength; j++) {
@@ -3153,6 +3162,9 @@ module['can/view/mustache/mustache.js'] = (function (can) {
 	can.each({
 		// Implements the `if` built-in helper.
 		'if': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr) {
 				return options.fn(this);
 			}
@@ -3162,6 +3174,9 @@ module['can/view/mustache/mustache.js'] = (function (can) {
 		},
 		// Implements the `unless` built-in helper.
 		'unless': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if (!expr) {
 				return options.fn(this);
 			}
@@ -3169,6 +3184,9 @@ module['can/view/mustache/mustache.js'] = (function (can) {
 
 		// Implements the `each` built-in helper.
 		'each': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr && expr.length) {
 				var result = [];
 				for (var i = 0; i < expr.length; i++) {
@@ -3179,8 +3197,12 @@ module['can/view/mustache/mustache.js'] = (function (can) {
 		},
 		// Implements the `with` built-in helper.
 		'with': function (expr, options) {
+			var ctx = expr;
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr) {
-				return options.fn(expr);
+				return options.fn(ctx);
 			}
 		}
 
@@ -3771,7 +3793,11 @@ module['can/observe/observe.js'] = (function (can) {
 				this.length = 0;
 				can.cid(this, ".observe")
 				this._init = 1;
-				this.push.apply(this, can.makeArray(instances || []));
+				if (can.isDeferred(instances)) {
+					this.replace(instances)
+				} else {
+					this.push.apply(this, can.makeArray(instances || []));
+				}
 				this.bind('change' + this._cid, can.proxy(this._changes, this));
 				can.extend(this, options);
 				delete this._init;
@@ -3816,14 +3842,14 @@ module['can/observe/observe.js'] = (function (can) {
 				for (i = 2; i < args.length; i++) {
 					var val = args[i];
 					if (canMakeObserve(val)) {
-						args[i] = hookupBubble(val, "*", this)
+						args[i] = hookupBubble(val, "*", this, this.constructor.Observe, this.constructor)
 					}
 				}
 				if (howMany === undefined) {
 					howMany = args[1] = this.length - index;
 				}
 				var removed = splice.apply(this, args);
-				can.Observe.startBatch()
+				can.Observe.startBatch();
 				if (howMany > 0) {
 					this._triggerChange("" + index, "remove", undefined, removed);
 					unhookup(removed, this._cid);
@@ -4043,7 +4069,7 @@ module['can/model/model.js'] = (function (can) {
 			// If we get a string, handle it.
 			if (typeof ajaxOb == "string") {
 				// If there's a space, it's probably the type.
-				var parts = ajaxOb.split(/\s/);
+				var parts = ajaxOb.split(/\s+/);
 				params.url = parts.pop();
 				if (parts.length) {
 					params.type = parts.pop();
@@ -4066,9 +4092,20 @@ module['can/model/model.js'] = (function (can) {
 			}, params));
 		},
 		makeRequest = function (self, type, success, error, method) {
-			var deferred, args = [self.serialize()],
-				// The model.
-				model = self.constructor,
+			var args;
+			// if we pass an array as `self` it it means we are coming from
+			// the queued request, and we're passing already serialized data
+			// self's signature will be: [self, serializedData]
+			if (can.isArray(self)) {
+				args = self[1];
+				self = self[0];
+			} else {
+				args = self.serialize();
+			}
+			args = [args];
+			var deferred,
+			// The model.
+			model = self.constructor,
 				jqXHR;
 
 			// `destroy` does not need data.
@@ -4212,6 +4249,7 @@ module['can/model/model.js'] = (function (can) {
 				this._url = this._shortName + "/{" + this.id + "}"
 			},
 			_ajax: ajaxMaker,
+			_makeRequest: makeRequest,
 			_clean: function () {
 				this._reqs--;
 				if (!this._reqs) {
@@ -4664,7 +4702,7 @@ module['can/observe/delegate/delegate.js'] = (function (can) {
 	// - parts - the attribute name of the delegate split in parts ['foo','*']
 	// - props - the split props of the event that happened ['foo','bar','0']
 	// - returns - the attribute to delegate too ('foo.bar'), or null if not a match 
-	var matches = function (parts, props) {
+	var delegateMatches = function (parts, props) {
 		//check props parts are the same or 
 		var len = parts.length,
 			i = 0,
@@ -4699,7 +4737,7 @@ module['can/observe/delegate/delegate.js'] = (function (can) {
 	},
 		// gets a change event and tries to figure out which
 		// delegates to call
-		delegate = function (event, prop, how, newVal, oldVal) {
+		delegateHandler = function (event, prop, how, newVal, oldVal) {
 			// pre-split properties to save some regexp time
 			var props = prop.split("."),
 				delegates = (this._observe_delegates || []).slice(0),
@@ -4730,7 +4768,7 @@ module['can/observe/delegate/delegate.js'] = (function (can) {
 					attr = delegate.attrs[a];
 
 					// check if it is a match
-					if (matchedAttr = matches(attr.parts, props)) {
+					if (matchedAttr = delegateMatches(attr.parts, props)) {
 						hasMatch = matchedAttr;
 					}
 					// if it has a value, make sure it's the right value
@@ -4815,7 +4853,7 @@ module['can/observe/delegate/delegate.js'] = (function (can) {
 				event: event
 			});
 			if (delegates.length === 1) {
-				this.bind("change", delegate)
+				this.bind("change", delegateHandler)
 			}
 			return this;
 		},
@@ -4842,13 +4880,13 @@ module['can/observe/delegate/delegate.js'] = (function (can) {
 			}
 			if (!delegates.length) {
 				//can.removeData(this, "_observe_delegates");
-				this.unbind("change", delegate)
+				this.unbind("change", delegateHandler)
 			}
 			return this;
 		}
 	});
 	// add helpers for testing .. 
-	can.Observe.prototype.delegate.matches = matches;
+	can.Observe.prototype.delegate.matches = delegateMatches;
 	return can.Observe;
 })(module["can/util/jquery/jquery.js"], module["can/observe/observe.js"]); // ## can/observe/setter/setter.js
 module['can/observe/setter/setter.js'] = (function (can) {
@@ -5587,7 +5625,7 @@ module['can/util/object/object.js'] = (function (can) {
 		}
 	}
 
-	return can;
+	return can.Object;
 
 })(module["can/util/jquery/jquery.js"]); // ## can/observe/backup/backup.js
 module['can/observe/backup/backup.js'] = (function (can) {

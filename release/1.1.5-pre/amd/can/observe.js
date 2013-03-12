@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -410,7 +410,11 @@ define(['can/util/library', 'can/construct'], function (can) {
 				this.length = 0;
 				can.cid(this, ".observe")
 				this._init = 1;
-				this.push.apply(this, can.makeArray(instances || []));
+				if (can.isDeferred(instances)) {
+					this.replace(instances)
+				} else {
+					this.push.apply(this, can.makeArray(instances || []));
+				}
 				this.bind('change' + this._cid, can.proxy(this._changes, this));
 				can.extend(this, options);
 				delete this._init;
@@ -455,14 +459,14 @@ define(['can/util/library', 'can/construct'], function (can) {
 				for (i = 2; i < args.length; i++) {
 					var val = args[i];
 					if (canMakeObserve(val)) {
-						args[i] = hookupBubble(val, "*", this)
+						args[i] = hookupBubble(val, "*", this, this.constructor.Observe, this.constructor)
 					}
 				}
 				if (howMany === undefined) {
 					howMany = args[1] = this.length - index;
 				}
 				var removed = splice.apply(this, args);
-				can.Observe.startBatch()
+				can.Observe.startBatch();
 				if (howMany > 0) {
 					this._triggerChange("" + index, "remove", undefined, removed);
 					unhookup(removed, this._cid);

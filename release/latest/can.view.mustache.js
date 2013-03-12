@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -635,6 +635,11 @@
 				// Check the context for the reference
 				value = contexts[i];
 
+				// Is the value a compute?
+				if (can.isFunction(value) && value.isComputed) {
+					value = value();
+				}
+
 				// Make sure the context isn't a failed object before diving into it.
 				if (value !== undefined) {
 					for (j = 0; j < namesLength; j++) {
@@ -764,6 +769,9 @@
 	can.each({
 		// Implements the `if` built-in helper.
 		'if': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr) {
 				return options.fn(this);
 			}
@@ -773,6 +781,9 @@
 		},
 		// Implements the `unless` built-in helper.
 		'unless': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if (!expr) {
 				return options.fn(this);
 			}
@@ -780,6 +791,9 @@
 
 		// Implements the `each` built-in helper.
 		'each': function (expr, options) {
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr && expr.length) {
 				var result = [];
 				for (var i = 0; i < expr.length; i++) {
@@ -790,8 +804,12 @@
 		},
 		// Implements the `with` built-in helper.
 		'with': function (expr, options) {
+			var ctx = expr;
+			if (can.isFunction(expr) && expr.isComputed) {
+				expr = expr();
+			}
 			if ( !! expr) {
-				return options.fn(expr);
+				return options.fn(ctx);
 			}
 		}
 

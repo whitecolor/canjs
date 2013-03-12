@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -61,7 +61,7 @@ define(['can/view', 'can/util/string'], function (can) {
 		},
 		getAttr = function (el, attrName) {
 			// Default to a blank string for IE7/8
-			return (attrMap[attrName] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
+			return (attrMap[attrName] && el[attrMap[attrName]] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
 		},
 		removeAttr = function (el, attrName) {
 			if (can.inArray(attrName, bool) > -1) {

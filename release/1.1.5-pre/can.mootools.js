@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.5-pre (2013-02-12)
+* CanJS - 1.1.5-pre (2013-03-12)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -187,7 +187,7 @@
 						df.resolve.apply(df, rp);
 					}
 				}).fail(function () {
-					df.reject(arguments);
+					df.reject((arguments.length === 1) ? arguments[0] : arguments);
 				});
 			});
 
@@ -598,7 +598,8 @@
 	}
 	can.ajax = function (options) {
 		var d = can.Deferred(),
-			requestOptions = can.extend({}, options);
+			requestOptions = can.extend({}, options),
+			request;
 		// Map jQuery options to MooTools options.
 		for (var option in optionsMap) {
 			if (requestOptions[option] !== undefined) {
@@ -610,25 +611,26 @@
 		requestOptions.method = requestOptions.method || 'get';
 		requestOptions.url = requestOptions.url.toString();
 
-		var success = options.success,
-			error = options.error;
+		var success = options.onSuccess || options.success,
+			error = options.onFailure || options.error;
 
-		requestOptions.onSuccess = function (responseText, xml) {
-			var data = responseText;
-			if (options.dataType === 'json') {
-				data = eval("(" + data + ")")
-			}
+		requestOptions.onSuccess = function (response, xml) {
+			var data = response;
 			updateDeferred(request.xhr, d);
 			d.resolve(data, "success", request.xhr);
 			success && success(data, "success", request.xhr);
 		}
-		requestOptions.onError = function () {
+		requestOptions.onFailure = function () {
 			updateDeferred(request.xhr, d);
 			d.reject(request.xhr, "error");
 			error(request.xhr, "error");
 		}
 
-		var request = new Request(requestOptions);
+		if (options.dataType === 'json') {
+			request = new Request.JSON(requestOptions);
+		} else {
+			request = new Request(requestOptions);
+		}
 		request.send();
 		updateDeferred(request.xhr, d);
 		return d;
@@ -1409,7 +1411,11 @@
 				this.length = 0;
 				can.cid(this, ".observe")
 				this._init = 1;
-				this.push.apply(this, can.makeArray(instances || []));
+				if (can.isDeferred(instances)) {
+					this.replace(instances)
+				} else {
+					this.push.apply(this, can.makeArray(instances || []));
+				}
 				this.bind('change' + this._cid, can.proxy(this._changes, this));
 				can.extend(this, options);
 				delete this._init;
@@ -1454,14 +1460,14 @@
 				for (i = 2; i < args.length; i++) {
 					var val = args[i];
 					if (canMakeObserve(val)) {
-						args[i] = hookupBubble(val, "*", this)
+						args[i] = hookupBubble(val, "*", this, this.constructor.Observe, this.constructor)
 					}
 				}
 				if (howMany === undefined) {
 					howMany = args[1] = this.length - index;
 				}
 				var removed = splice.apply(this, args);
-				can.Observe.startBatch()
+				can.Observe.startBatch();
 				if (howMany > 0) {
 					this._triggerChange("" + index, "remove", undefined, removed);
 					unhookup(removed, this._cid);
@@ -1679,7 +1685,7 @@
 			// If we get a string, handle it.
 			if (typeof ajaxOb == "string") {
 				// If there's a space, it's probably the type.
-				var parts = ajaxOb.split(/\s/);
+				var parts = ajaxOb.split(/\s+/);
 				params.url = parts.pop();
 				if (parts.length) {
 					params.type = parts.pop();
@@ -1702,9 +1708,20 @@
 			}, params));
 		},
 		makeRequest = function (self, type, success, error, method) {
-			var deferred, args = [self.serialize()],
-				// The model.
-				model = self.constructor,
+			var args;
+			// if we pass an array as `self` it it means we are coming from
+			// the queued request, and we're passing already serialized data
+			// self's signature will be: [self, serializedData]
+			if (can.isArray(self)) {
+				args = self[1];
+				self = self[0];
+			} else {
+				args = self.serialize();
+			}
+			args = [args];
+			var deferred,
+			// The model.
+			model = self.constructor,
 				jqXHR;
 
 			// `destroy` does not need data.
@@ -1848,6 +1865,7 @@
 				this._url = this._shortName + "/{" + this.id + "}"
 			},
 			_ajax: ajaxMaker,
+			_makeRequest: makeRequest,
 			_clean: function () {
 				this._reqs--;
 				if (!this._reqs) {
@@ -2729,8 +2747,10 @@
 			}
 
 			if (can.isDeferred(result)) {
-				result.done(function (result, data) {
+				result.then(function (result, data) {
 					deferred.resolve.call(deferred, pipe(result), data);
+				}, function () {
+					deferred.fail.apply(deferred, arguments);
 				});
 				return deferred;
 			}
@@ -2875,6 +2895,8 @@
 
 					// If there's a `callback`, call it back with the result.
 					callback && callback(result, dataCopy);
+				}, function () {
+					deferred.reject.apply(deferred, arguments)
 				});
 				// Return the deferred...
 				return deferred;
@@ -3533,7 +3555,7 @@
 					case '>':
 						htmlTag = 0;
 						// content.substr(-1) doesn't work in IE7/8
-						var emptyElement = content.substr(content.length - 1) == "/";
+						var emptyElement = content.substr(content.length - 1) == "/" || content.substr(content.length - 2) == "--";
 						// if there was a magic tag
 						// or it's an element that has text content between its tags, 
 						// but content is not other tags add a hookup
@@ -3778,7 +3800,7 @@
 		},
 		getAttr = function (el, attrName) {
 			// Default to a blank string for IE7/8
-			return (attrMap[attrName] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
+			return (attrMap[attrName] && el[attrMap[attrName]] ? el[attrMap[attrName]] : el.getAttribute(attrName)) || '';
 		},
 		removeAttr = function (el, attrName) {
 			if (can.inArray(attrName, bool) > -1) {
