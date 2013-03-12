@@ -142,5 +142,9 @@
 				// if it's a new instance, call default destroy method
 				return destroyFn.call(this, success, error);
 			}
+			return queueRequests.call(this, success, error, 'destroy', 'destroyed');
+		}
+	})
 
-		})(can, this);
+
+})(can, this);

@@ -94,7 +94,11 @@ if API returns error</p>             </td>             <td class="code">        
     <span class="nx">destroy</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">)</span> <span class="p">{</span>
       <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">isNew</span><span class="p">())</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-24">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-24">&#182;</a>               </div>               <p>if it's a new instance, call default destroy method</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">return</span> <span class="nx">destroyFn</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">);</span>
       <span class="p">}</span>
+      <span class="k">return</span> <span class="nx">queueRequests</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">success</span><span class="p">,</span> <span class="nx">error</span><span class="p">,</span> <span class="s1">&#39;destroy&#39;</span><span class="p">,</span> <span class="s1">&#39;destroyed&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">})</span>
 
-    <span class="p">})(</span><span class="nx">can</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+
+<span class="p">})(</span><span class="nx">can</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
