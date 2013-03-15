@@ -497,8 +497,8 @@ This makes a request to `GET /todos` which should return JSON like:
 }
 {% endhighlight %}
 
-__Note: `.findAll` can also accept an array, but you probably [should not
-be doing that](http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx).__
+_Note: `.findAll` can also accept an array, but you probably [should not
+be doing that](http://haacked.com/archive/2008/11/20/anatomy-of-a-subtle-json-vulnerability.aspx)._
 
 The __todos__ parameter is a [can.Model.List](#can_model-can_model_list) of 
 todo instances. `Todo.findAll` returns a [deferred](#utilities-deferred) that resolves to 
