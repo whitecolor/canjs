@@ -489,16 +489,11 @@ This makes a request to `GET /todos` which should return JSON like:
 
 {% highlight javascript %}
 {
-  "data": [{
-    "id" : 1,
-    "name" : "do the dishes"
-  },{
-    "id" : 2,
-    "name" : "mow the lawn"
-  },{
-    "id" : 3,
-    "name" : "iron my shirts"
-  }]
+  "data": [
+    { "id" : 1, "name" : "do the dishes" },
+    { "id" : 2, "name" : "mow the lawn" },
+    { "id" : 3, "name" : "iron my shirts" }
+  ]
 }
 {% endhighlight %}
 
