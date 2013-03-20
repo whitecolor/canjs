@@ -1357,7 +1357,7 @@ test("correctness of data-view-id and only in tag opening", function(){
 test("Observe properties added after initialization do not live update properly in attributes", function() {
 	var renderer = can.view.ejs('asdf', '<img <% if (this.attr("image")) { %>src="<%=this.attr("image")%>"<% } %> alt="An image" />'),
 		// renderer2 = can.view.ejs('asdf2', '<img src="<%== this.attr("image") %>" alt="An image" />'),
-		renderer2 = can.view.ejs('asdf2', '<img <% { %>src="<%== this.attr("image") %>"<% } %> alt="An image" />'),
+		renderer2 = can.view.ejs('asdf2', '<img src="<% { %><%== this.attr("image") %><% } %>" alt="An image" />'),
 		url = 'http://farm8.staticflickr.com/7102/6999583228_99302b91ac_n.jpg',
 		data = new can.Observe({
 			user: 'Tina Fey',
