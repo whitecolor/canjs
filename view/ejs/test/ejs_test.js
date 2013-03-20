@@ -1355,24 +1355,39 @@ test("correctness of data-view-id and only in tag opening", function(){
 	
 // https://github.com/bitovi/canjs/issues/157
 test("Observe properties added after initialization do not live update properly in attributes", function() {
-	var renderer = can.view.ejs('asdf', '<img <% if (this.attr("image")) { %>src="<%=this.attr("image")%>"<% } %> alt="An image" /><%=this.attr("image")%>'),
+	var renderer = can.view.ejs('asdf', '<img <% if (this.attr("image")) { %>src="<%=this.attr("image")%>"<% } %> alt="An image" />'),
+		// renderer2 = can.view.ejs('asdf2', '<img src="<%== this.attr("image") %>" alt="An image" />'),
+		renderer2 = can.view.ejs('asdf2', '<img <% { %>src="<%== this.attr("image") %>"<% } %> alt="An image" />'),
 		url = 'http://farm8.staticflickr.com/7102/6999583228_99302b91ac_n.jpg',
 		data = new can.Observe({
-        user: 'Tina Fey',
-        messages: 0,
-// image: 'beep'
-    }),
+			user: 'Tina Fey',
+			// image: 'beep',
+			messages: 0
+		}),
+		data2 = new can.Observe({
+			user: 'Tina Fey',
+			// image: 'beep',
+			messages: 0
+		}),
 		div = document.createElement('div');
-		
+	
+	// Attribute inside block
+	div.innerHTML = '';
 	div.appendChild(can.view('asdf', data));
-	
 	var img = div.getElementsByTagName('img')[0];
-	equal(img.hasAttribute('src'), false, 'Image should not have src');
-	
-	data.attr('messages', 5);
+	equal(img.hasAttribute('src'), false, 'Image should not have src (attribute inside block)');
 	data.attr('image', url);
-	equal(img.hasAttribute('src'), true, 'Image should have src');
-	equal(img.src, url, 'Image should have src URL');
+	equal(img.hasAttribute('src'), true, 'Image should have src (attribute inside block)');
+	equal(img.src, url, 'Image should have src URL (attribute inside block)');
+	
+	// Attribute outside block
+	div.innerHTML = '';
+	div.appendChild(can.view('asdf2', data2));
+	img = div.getElementsByTagName('img')[0];
+	equal(img.hasAttribute('src'), true, 'Image should have src pre-value (attribute outside block)');
+	data2.attr('image', url);
+	equal(img.hasAttribute('src'), true, 'Image should have src (attribute outside block)');
+	equal(img.src, url, 'Image should have src URL (attribute outside block)');
 });
 
 })();
