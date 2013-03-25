@@ -1,8 +1,8 @@
 ---
 layout: default
 title: CanJS
-version: 1.1.4
-downloadUrl: http://canjs.us/release/1.1.4
+version: 1.1.5
+downloadUrl: http://canjs.us/release/1.1.5
 ---
 
 # Welcome to CanJS!
