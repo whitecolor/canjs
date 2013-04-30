@@ -291,9 +291,9 @@ define(['can/util/library', 'can/util/bind'], function(can, bind) {
                 }
             },
 
-            bind: bind.bindAndSetup,
+            bind: can.bindAndSetup,
 
-            unbind: bind.unbindAndTeardown
+            unbind: can.unbindAndTeardown
         });
     };
     can.compute.binder = computeBinder;

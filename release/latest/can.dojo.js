@@ -1371,8 +1371,8 @@
     var Observe = can.Observe = can.Construct({
 
         // keep so it can be overwritten
-        bind: bind.bindAndSetup,
-        unbind: bind.unbindAndTeardown,
+        bind: can.bindAndSetup,
+        unbind: can.unbindAndTeardown,
         id: "id",
         canMakeObserve: canMakeObserve,
         // starts collecting events
@@ -1629,9 +1629,9 @@
         },
 
 
-        bind: bind.bindAndSetup,
+        bind: can.bindAndSetup,
 
-        unbind: bind.unbindAndTeardown,
+        unbind: can.unbindAndTeardown,
 
         serialize: function() {
             return serialize(this, 'serialize', {});
@@ -3740,9 +3740,9 @@
                 }
             },
 
-            bind: bind.bindAndSetup,
+            bind: can.bindAndSetup,
 
-            unbind: bind.unbindAndTeardown
+            unbind: can.unbindAndTeardown
         });
     };
     can.compute.binder = computeBinder;

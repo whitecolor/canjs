@@ -2221,9 +2221,9 @@ module['can/observe/compute/compute.js'] = (function(can, bind) {
                 }
             },
 
-            bind: bind.bindAndSetup,
+            bind: can.bindAndSetup,
 
-            unbind: bind.unbindAndTeardown
+            unbind: can.unbindAndTeardown
         });
     };
     can.compute.binder = computeBinder;
@@ -3959,8 +3959,8 @@ module['can/observe/observe.js'] = (function(can, bind) {
     var Observe = can.Observe = can.Construct({
 
         // keep so it can be overwritten
-        bind: bind.bindAndSetup,
-        unbind: bind.unbindAndTeardown,
+        bind: can.bindAndSetup,
+        unbind: can.unbindAndTeardown,
         id: "id",
         canMakeObserve: canMakeObserve,
         // starts collecting events
@@ -4217,9 +4217,9 @@ module['can/observe/observe.js'] = (function(can, bind) {
         },
 
 
-        bind: bind.bindAndSetup,
+        bind: can.bindAndSetup,
 
-        unbind: bind.unbindAndTeardown,
+        unbind: can.unbindAndTeardown,
 
         serialize: function() {
             return serialize(this, 'serialize', {});
