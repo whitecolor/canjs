@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.6-pre (2013-05-01)
+* CanJS - 1.1.6-pre (2013-05-02)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -1080,8 +1080,8 @@
     var Observe = can.Observe = can.Construct({
 
         // keep so it can be overwritten
-        bind: bind.bindAndSetup,
-        unbind: bind.unbindAndTeardown,
+        bind: can.bindAndSetup,
+        unbind: can.unbindAndTeardown,
         id: "id",
         canMakeObserve: canMakeObserve,
         // starts collecting events
@@ -1338,9 +1338,9 @@
         },
 
 
-        bind: bind.bindAndSetup,
+        bind: can.bindAndSetup,
 
-        unbind: bind.unbindAndTeardown,
+        unbind: can.unbindAndTeardown,
 
         serialize: function() {
             return serialize(this, 'serialize', {});
