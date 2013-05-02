@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.6-pre (2013-04-30)
+* CanJS - 1.1.6-pre (2013-05-01)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -122,8 +122,8 @@ define(['can/util/library', 'can/util/bind', 'can/construct'], function(can, bin
     var Observe = can.Observe = can.Construct({
 
         // keep so it can be overwritten
-        bind: can.bindAndSetup,
-        unbind: can.unbindAndTeardown,
+        bind: bind.bindAndSetup,
+        unbind: bind.unbindAndTeardown,
         id: "id",
         canMakeObserve: canMakeObserve,
         // starts collecting events
@@ -380,9 +380,9 @@ define(['can/util/library', 'can/util/bind', 'can/construct'], function(can, bin
         },
 
 
-        bind: can.bindAndSetup,
+        bind: bind.bindAndSetup,
 
-        unbind: can.unbindAndTeardown,
+        unbind: bind.unbindAndTeardown,
 
         serialize: function() {
             return serialize(this, 'serialize', {});
@@ -436,12 +436,7 @@ define(['can/util/library', 'can/util/bind', 'can/construct'], function(can, bin
 
 
         compute: function(prop) {
-            var self = this,
-                computer = function(val) {
-                    return self.attr(prop, val);
-                };
-
-            return can.compute ? can.compute(computer) : computer;
+            return can.compute(this, prop);
         }
     });
     // Helpers for `observable` lists.

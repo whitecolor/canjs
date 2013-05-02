@@ -1,5 +1,5 @@
 /*!
-* CanJS - 1.1.6-pre (2013-04-30)
+* CanJS - 1.1.6-pre (2013-05-01)
 * http://canjs.us/
 * Copyright (c) 2013 Bitovi
 * Licensed MIT
@@ -244,6 +244,11 @@ define(['can/util/library', 'can/construct'], function(can) {
         // Prepares a `control` for garbage collection
 
         destroy: function() {
+            //Control already destroyed
+            if (this.element === null) {
+
+                return;
+            }
             var Class = this.constructor,
                 pluginName = Class.pluginName || Class._fullName,
                 controls;
