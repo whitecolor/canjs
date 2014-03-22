@@ -88,7 +88,6 @@ steal('can/util', 'can/util/bind', 'can/util/batch', function (can, bind) {
 			// A flag that is used to figure out if we are already observing on an event.
 			obEv,
 			name;
-		console.log($.extend({}, newObserveSet))
 		// Go through what needs to be observed.
 		for( name in newObserveSet ) {
 			

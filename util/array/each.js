@@ -14,7 +14,7 @@ steal('can/util/can.js', function (can) {
 			item;
 		if (elements) {
 			if ( isArrayLike(elements) ) {
-				if( elements.attr ) {
+				if(can.List && elements instanceof can.List ) {
 					for (len = elements.attr("length"); i < len; i++) {
 						item = elements.attr(i);
 						if (callback.call(context || item, item, i, elements) === false) {
@@ -32,7 +32,7 @@ steal('can/util/can.js', function (can) {
 				
 			} else if (typeof elements === "object") {
 				
-				if (can.Map && elements instanceof can.Map) {
+				if (can.Map && elements instanceof can.Map || elements === can.route) {
 					var keys = can.Map.keys(elements)
 					for(i =0, len = keys.length; i < len; i++) {
 						key = keys[i];
