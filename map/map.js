@@ -395,6 +395,13 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 					type: attr,
 					batchNum: ev.batchNum
 				}, [newVal, oldVal]);
+				
+				if(how === "remove" || how === "add") {
+					can.batch.trigger(this, {
+						type: "__keys",
+						batchNum: ev.batchNum
+					});
+				} 
 			},
 			_triggerChange: function (attr, how, newVal, oldVal) {
 				can.batch.trigger(this, "change", can.makeArray(arguments));
@@ -593,8 +600,7 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 			 * @codeend
 			 */
 			each: function () {
-				can.__reading(this, '__keys');
-				return can.each.apply(undefined, [this.__get()].concat(can.makeArray(arguments)));
+				return can.each.apply(undefined, [this].concat(can.makeArray(arguments)));
 			},
 			/**
 			 * @function can.Map.prototype.removeAttr removeAttr
@@ -646,7 +652,6 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 							delete this[prop];
 						}
 						// Let others know the number of keys have changed
-						can.batch.trigger(this, "__keys");
 						this._triggerChange(prop, "remove", undefined, current);
 
 					}
@@ -738,13 +743,6 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 						// Value is normal.
 						value);
 
-					if (changeType === "add") {
-						// If there is no current value, let others know that
-						// the the number of keys have changed
-
-						can.batch.trigger(this, "__keys", undefined);
-
-					}
 					// `batchTrigger` the change event.
 					this._triggerChange(prop, changeType, value, current);
 

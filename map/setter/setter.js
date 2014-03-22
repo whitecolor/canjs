@@ -50,17 +50,43 @@ steal('can/util', 'can/map/attributes', function (can) {
 				}
 				return false;
 			}, self = this;
+			
+		//!steal-remove-start
+		var asyncTimer;
+		//!steal-remove-end
+			
 		// if we have a setter
-		if (this[setName] &&
+		if (this[setName] ) {
 			// call the setter, if returned value is undefined,
 			// this means the setter is async so we
 			// do not call update property and return right away
-			(value = this[setName](value, function (value) {
+			can.batch.start();
+			
+			value = this[setName](value, function (value) {
 				old.call(self, prop, value, current, success, errorCallback);
-			}, errorCallback)) === undefined) {
-			return;
+				can.batch.stop();
+				//!steal-remove-start
+				clearTimeout(asyncTimer);
+				//!steal-remove-end
+			}, errorCallback);
+			
+			if(value === undefined) {
+				//!steal-remove-start
+				asyncTimer = setTimeout(function(){
+					can.dev.warn('can/map/setter.js: Setter ' + setName+' did not return a value or call the setter callback.');
+				},can.dev.warnTimeout)
+				//!steal-remove-end
+				return;
+			} else {
+				old.call(self, prop, value, current, success, errorCallback);
+				can.batch.stop();
+				return this;
+			}
+			
+		} else {
+			old.call(self, prop, value, current, success, errorCallback);	
 		}
-		old.call(self, prop, value, current, success, errorCallback);
+		
 		return this;
 	};
 	return can.Map;
