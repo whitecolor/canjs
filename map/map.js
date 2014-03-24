@@ -79,7 +79,7 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 					// a list of the compute properties
 					this._computes = [];
 					for (var prop in this.prototype) {
-						if (typeof this.prototype[prop] !== "function") {
+						if (prop !== "define" && typeof this.prototype[prop] !== "function") {
 							this.defaults[prop] = this.prototype[prop];
 						} else if (this.prototype[prop].isComputed) {
 							this._computes.push(prop);
@@ -642,20 +642,22 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 					if (!!~attr.indexOf('.')) {
 						prop = attr;
 					}
-					if (isList) {
-						this.splice(prop, 1);
-					} else if (prop in this._data) {
-						// Otherwise, `delete`.
-						delete this._data[prop];
-						// Create the event.
-						if (!(prop in this.constructor.prototype)) {
-							delete this[prop];
-						}
-						// Let others know the number of keys have changed
-						this._triggerChange(prop, "remove", undefined, current);
-
-					}
+					
+					this._remove(prop, current);
 					return current;
+				}
+			},
+			_remove: function(prop, current){
+				if (prop in this._data) {
+					// Otherwise, `delete`.
+					delete this._data[prop];
+					// Create the event.
+					if (!(prop in this.constructor.prototype)) {
+						delete this[prop];
+					}
+					// Let others know the number of keys have changed
+					this._triggerChange(prop, "remove", undefined, current);
+
 				}
 			},
 			// Reads a property from the `object`.
@@ -721,6 +723,15 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 					throw "can.Map: Object does not exist";
 				}
 			},
+			__type: function(value, prop){
+				// If we are getting an object.
+				return Map.helpers.canMakeObserve(value) ?
+
+						// Hook it up to send event.
+						Map.helpers.hookupBubble(value, prop, this) :
+						// Value is normal.
+						value;
+			},
 			__set: function (prop, value, current) {
 
 				// Otherwise, we are setting it on this `object`.
@@ -733,15 +744,7 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 						.hasOwnProperty(prop) ? "set" : "add";
 
 					// Set the value on data.
-					this.___set(prop,
-
-						// If we are getting an object.
-						Map.helpers.canMakeObserve(value) ?
-
-						// Hook it up to send event.
-						Map.helpers.hookupBubble(value, prop, this) :
-						// Value is normal.
-						value);
+					this.___set(prop, this.__type(value, prop));
 
 					// `batchTrigger` the change event.
 					this._triggerChange(prop, changeType, value, current);

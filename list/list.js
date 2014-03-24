@@ -134,6 +134,9 @@ steal("can/util", "can/map", function (can, Map) {
 					this.length = (+attr + 1);
 				}
 			},
+			_remove: function(prop) {
+				this.splice(prop, 1);
+			},
 			_each: function (callback) {
 				var data = this.__get();
 				for (var i = 0; i < data.length; i++) {

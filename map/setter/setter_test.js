@@ -84,7 +84,8 @@ steal("can/map/setter", "can/test", function () {
 		
 	});
 	
-		//!steal-remove-start
+	
+	//!steal-remove-start
 	if (can.dev) {
 		test('setter function warns if a timeout did not happen (#808)', function () {
 			stop();
@@ -131,6 +132,7 @@ steal("can/map/setter", "can/test", function () {
 			})
 			
 		});
+		
 		
 	}
 	//!steal-remove-end
