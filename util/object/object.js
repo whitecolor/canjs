@@ -202,6 +202,12 @@ steal('can/util', function (can) {
 			return ('' + a)
 				.toLowerCase() === ('' + b)
 				.toLowerCase();
+		},
+		eq: function(a, b) {
+			return a === b;
+		},
+		similar: function(a, b) {
+			return a == b;
 		}
 	};
 	return can.Object;

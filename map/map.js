@@ -689,7 +689,7 @@ steal('can/util', 'can/util/bind', 'can/construct', 'can/util/batch', function (
 			// returns the "real" data object itself.
 			__get: function (attr) {
 				if (attr) {
-					if (this[attr] && this[attr].isComputed && can.isFunction(this.constructor.prototype[attr])) {
+					if (this._computedBindings[attr]) {
 						return this[attr]();
 					} else {
 						return this._data[attr];

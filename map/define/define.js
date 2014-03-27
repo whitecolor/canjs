@@ -1,4 +1,4 @@
-steal('can/util', 'can/map/attributes', 'can/util/string/classize.js',function (can) {
+steal('can/util', 'can/compute','can/map/attributes', 'can/util/string/classize.js',function (can) {
 	var classize = can.classize,
 		proto = can.Map.prototype,
 		oldSet = proto.__set;
@@ -68,19 +68,65 @@ steal('can/util', 'can/map/attributes', 'can/util/string/classize.js',function (
 		return this;
 	};
 	
+	var converters = {
+		'date': function (str) {
+			var type = typeof str;
+			if (type === 'string') {
+				str = Date.parse(str);
+				return isNaN(str) ? null : new Date(str);
+			} else if (type === 'number') {
+				return new Date(str);
+			} else {
+				return str;
+			}
+		},
+		'number': function (val) {
+			return parseFloat(val);
+		},
+		'boolean': function (val) {
+			if (val === 'false' || val === '0' || !val) {
+				return false;
+			}
+			return true;
+		},
+		'*': function(val){
+			return val;
+		},
+		'string': function(val){
+			return ''+val;
+		}
+	}
 	
+	// the old type sets up bubbling
 	var oldType = proto.__type;
 	proto.__type = function(value, prop){
 		var def = this.define && this.define[prop],
-			type ;
-		if(def) {
-			if(def.type) {
-				return def.type.call(this, value, prop);
-			} else if(def.set) {
-				return value;
+			type = def && def.type,
+			Type = def && def.Type,
+			newValue = value;
+		
+		if(typeof type === "string"){
+			type = converters[type];
+		}
+		
+		if( type || Type ) {
+			// If there's a type, convert it.
+			if( type ) {
+				newValue = type.call(this, newValue, prop);
 			}
+			// If there's a Type create a new instance of it
+			if(Type) {
+				newValue = new Type(newValue);
+			}
+			// If the newValue is a Map, we need to hook it up
+			if(newValue instanceof can.Map) {
+				return can.Map.helpers.hookupBubble(newValue, prop, this)
+			} else {
+				return newValue;
+			}
+			
 		} 
-		return oldType.call(value, prop);
+		return oldType.call(this,newValue, prop);
 	};
 	
 	var oldRemove = proto._remove;
@@ -104,5 +150,19 @@ steal('can/util', 'can/map/attributes', 'can/util/string/classize.js',function (
 		return oldRemove.call(this, prop, current);
 	};
 	
+	var oldSetupComputes = proto._setupComputes
+	proto._setupComputes = function(){
+		oldSetupComputes.apply(this, arguments);
+		for(var attr in this.define){
+			var def = this.define[attr]
+				get = def.get;
+			if(get) {
+				this[attr] = can.compute.async(def.value, get, this);
+				this._computedBindings[attr] = {
+					count: 0
+				};
+			}
+		}
+	}
 	return can.Map;
 });
