@@ -21,16 +21,14 @@
 			// assign a false positive if detection fails => unable to shiv
 			supportsUnknownElements = true;
 		}
-	}())
+	}());
 
 
 	steal.config({
 		map: {
-			"*": {
-				"jquery/jquery.js": "jquery",
-				"can/util/util.js": "can/util/jquery/jquery.js",
-				"benchmark/benchmark.js":"benchmark"
-			}
+			"jquery/jquery": "jquery",
+			"can/util/util": "can/util/jquery/jquery",
+			"benchmark/benchmark": "benchmark"
 		},
 		paths: {
 			"jquery": "lib/jquery.1.10.2.js",
@@ -38,12 +36,12 @@
 			"dojo/dojo.js": "util/dojo/dojo-1.8.1.js",
 			"yui/yui.js": "lib/yui-3.7.3.js",
 			"zepto/zepto.js": "bower_components/zepto/zepto.js",
-			"can/": "",
+			"can/*": "*.js",
 			"jquerypp/": "http://jquerypp.com/release/1.0.1/steal/",
 			"benchmark": "bower_components/benchmark/benchmark.js",
 			"jqueryui/jqueryui.js" :"http://code.jquery.com/ui/1.10.4/jquery-ui.js"
 		},
-		shim: {
+		meta: {
 			jquery: {
 				exports: "jQuery",
 				deps: supportsUnknownElements ? undefined : ["can/lib/html5shiv.js"]
@@ -67,7 +65,6 @@
 		ext: {
 			ejs: "view/ejs/ejs.js",
 			mustache: "view/mustache/mustache.js"
-		},
-		root: steal.config('root').join('../')
+		}
 	});
 })();
