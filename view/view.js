@@ -218,6 +218,9 @@ steal('can/util', function (can) {
 		// #### fragment
 		// this is used internally to create a document fragment, insert it,then hook it up
 		fragment: function (result) {
+			if(typeof result !== "string" && result.nodeType === 11) {
+				return result;
+			}
 			var frag = can.buildFragment(result, document.body);
 			// If we have an empty frag...
 			if (!frag.childNodes.length) {
@@ -379,7 +382,7 @@ steal('can/util', function (can) {
 			// _removed if not used as a steal module_
 
 			//!steal-remove-start
-			if (window.steal) {
+			if ( window.steal && steal.type ) {
 				steal.type(info.suffix + " view js", function (options, success, error) {
 					var type = $view.types["." + options.type],
 						id = $view.toId(options.id + '');
@@ -708,7 +711,7 @@ steal('can/util', function (can) {
 	// _removed if not used as a steal module_
 
 	//!steal-remove-start
-	if (window.steal) {
+	if (window.steal && steal.type) {
 		//when being used as a steal module, add a new type for 'view' that runs
 		// `can.view.preloadStringRenderer` with the loaded string/text for the dependency.
 		steal.type("view js", function (options, success, error) {
@@ -720,7 +723,9 @@ steal('can/util', function (can) {
 			 * return can.view.preload("ID", options.text)
 			 * })
 			 */
-			options.text = 'steal(\'' + (type.plugin || 'can/view/' + options.type) + '\',function(can){return ' + 'can.view.preloadStringRenderer(\'' + id + '\',' + options.text + ');\n})';
+			var dependency = type.plugin || 'can/view/' + options.type,
+				preload = type.fragRenderer ? "preload" : "preloadStringRenderer";
+			options.text = 'steal(\'can/view\',\'' + dependency + '\',function(can){return ' + 'can.view.'+preload+'(\'' + id + '\',' + options.text + ');\n})';
 			success();
 		});
 	}

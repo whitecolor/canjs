@@ -64,7 +64,8 @@
 		},
 		ext: {
 			ejs: "view/ejs/ejs.js",
-			mustache: "view/mustache/mustache.js"
+			mustache: "view/mustache/mustache.js",
+			stache: "view/stache/stache.js"
 		}
 	});
 })();
