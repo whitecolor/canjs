@@ -1,0 +1,28 @@
+<body>
+	<script src=''></script>
+	
+	<component style='display:none'>{{message}}</component>
+		{{#if foo}}<div>{{bar}}</div>{{/if}}
+	
+	
+	<can:if "foo">
+		<div><can:value key='bar'></can:value></div>
+	</can:if>
+	<script src='../../../lib/steal/steal.js'></script>
+	<script>
+		steal("can/view/stache/dom", function(stacheDom){
+			stacheDom(document.body,{message: "World"});
+		});
+		
+		// if you find {{}} hookup yourself with the data ...
+		// if you find {{#if foo}}
+			// establish a section?
+			// remove children?
+			// evaluate? ... but it wants the future content ...
+			// would have to see bar but not render ... boo!
+			// only custom tags and {{}} are allowed ...
+		
+		// with custom tag ... pull out?
+		
+	</script>
+</body>

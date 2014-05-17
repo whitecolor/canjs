@@ -97,4 +97,29 @@ steal("can/view/target", function(target){
 		
 	});
 	
+	test("raw elements", function(){
+		
+
+		var data = target([
+			{ 
+				element: document.createElement("h1"),
+				children: [
+					document.createTextNode("Hello "),
+					function(data){  this.nodeValue = data.message },
+					document.createTextNode("!")
+				]
+			}
+		]);
+		
+		var res = data.hydrate({
+			message: "World"
+		});
+		
+		equal(res.childNodes[0].nodeName.toLowerCase(), "h1", "got an h1");
+	
+		equal(res.childNodes[0].innerHTML, "Hello World!", "got an h1");
+	});
+	
+	
+	
 });

@@ -6,7 +6,8 @@ steal("can/util", "can/view/elements.js",function(can, elements){
 		
 		for(var i = 0, len = nodes.length; i < len; i++) {
 			var node = nodes[i];
-			frag.appendChild( processNode(node,paths,location.concat(i)) );
+			var processed = processNode(node,paths,location.concat(i));
+			frag.appendChild( processed );
 		}
 		return frag;
 	},
@@ -43,8 +44,8 @@ steal("can/util", "can/view/elements.js",function(can, elements){
 		};
 		
 		if(nodeType === "object") {
-			if( node.tag ) {
-				el = document.createElement(node.tag);
+			if( node.tag || node.element) {
+				el = node.element || document.createElement(node.tag);
 			
 				if(node.attrs) {
 					for(var attrName in node.attrs) {
@@ -80,6 +81,8 @@ steal("can/util", "can/view/elements.js",function(can, elements){
 						getCallback().callbacks.push({callback: node.callbacks[i]});
 					}
 				}
+			} else if(node.nodeName) {
+				el = node;
 			}
 			
 			
