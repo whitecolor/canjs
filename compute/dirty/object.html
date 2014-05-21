@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Dirty Checking Demo Page</title>
+</head>
+<body>
+<script type='text/javascript' src='../../lib/steal/steal.js'></script>
+<script type='text/javascript' src='watch.js'></script>
+<script type="text/javascript">
+steal('can/compute/dirty/object.js', function(){
+	var foo = {bar: "Hello"};
+	var barCompute = can.compute.watch(foo, "bar");
+	barCompute.bind('change', function(ev, newVal, oldVal){
+	  console.log(newVal);
+	});
+	foo.bar = "hi";
+	Platform.performMicrotaskCheckpoint();
+
+});
+</script>
+
+</body>
+</html>
