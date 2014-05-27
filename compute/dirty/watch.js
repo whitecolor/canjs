@@ -1,4 +1,4 @@
-steal('can/compute', 'observe-js', function(compute){
+steal('can/compute', 'observejs', function(compute){
 
 compute.watch = function(object, property){
 	var observer = new PathObserver(object, property);
