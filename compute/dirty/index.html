@@ -2,18 +2,42 @@
 <html>
 <head>
 	<title>Dirty Checking Demo Page</title>
+<script src="../../bower_components/es5-shim/es5-shim.js"></script>
+<script src="../../bower_components/es5-shim/es5-sham.js"></script>
 </head>
 <body>
 <script type='text/javascript' src='../../lib/steal/steal.js'></script>
 <script type='text/javascript' src='watch.js'></script>
+<script type='text/mustache' id="dirtytemplate">
+	{{pathValue}}
+</script>
 <script type="text/javascript">
-steal('can/compute/dirty/watch.js', function(){
-	var foo = {bar: "Hello"}
-	var obs = can.compute.watch(foo, "bar");
-	obs.bind('change', function(ev, newVal){
-		alert("Changed:" + newVal);
-	})
+var foo, obs,
+		fooObject, obsObject,
+		fooArray, obsArray;
+
+steal('can', 'can/compute/dirty/watch.js', function(can){
+
+	foo = {bar: "Hello"};
+	obs = can.compute.watch(foo, "bar");
 	foo.bar = "hi";
+	obs.bind('change', function(ev, newVal){
+		console.log(newVal);
+	});
+
+	fooObject = {bar: "Hello", baz: "Goodbye"};
+	obsObject = can.Map.watch(fooObject);
+	fooObject.baz = "Later";
+	obsObject.bind('change', function(ev, attr, how, newVal){
+		console.log(attr + ", " + how + ", " + newVal);
+	});
+
+	fooArray = [1, 2, 3, 4, 5];
+	obsArray = can.List.watch(fooArray);
+	fooArray.splice(0, 5, 2, 2, 3, 4, 5);
+	obsArray.bind('change', function(ev, index, how, newVal, oldVal){
+		console.log(index + ", " + how + ", " + (newVal | oldVal));
+	});
 
 	Platform.performMicrotaskCheckpoint();
 
