@@ -18,5 +18,7 @@
     "observe-js": "~0.2.4",
     "Object.observe": "https://github.com/jdarling/Object.observe.git",
     "es5-shim": "~3.3.2"
+    "steal": "git://github.com/bitovi/steal#738455bbf1eaf28b14ed6c22cb2ae9ade7248c05",
+    "dojo" : "1.8.6"
   }
 }

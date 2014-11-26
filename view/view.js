@@ -56,7 +56,13 @@ steal('can/util', function (can) {
 	 * @param {Boolean} async If the ajax request should be asynchronous.
 	 * @returns {can.Deferred} a `view` renderer deferred.
 	 */
-	var	get = function (obj, async) {
+	var	getRenderer = function (obj, async) {
+		// If `obj` already is a renderer function just resolve a Deferred with it
+		if(isFunction(obj)) {
+			var def = can.Deferred();
+			return def.resolve(obj);
+		}
+
 		var url = typeof obj === 'string' ? obj : obj.url,
 			suffix = (obj.engine && '.' + obj.engine) || url.match(/\.[\w\d]+$/),
 			type,
@@ -191,15 +197,9 @@ steal('can/util', function (can) {
 			callback = helpers;
 			helpers = undefined;
 		}
-		var result;
-		// Get the result, if a renderer function is passed in, then we just use that to render the data
-		if( isFunction(view) ) {
-			result = view(data, helpers, callback);
-		} else {
-			result = $view.renderAs("fragment",view, data, helpers, callback);
-		}
 
-		return result;
+		// Render the view as a fragment
+		return $view.renderAs("fragment",view, data, helpers, callback);
 	};
 
 	// can.view methods
@@ -382,7 +382,7 @@ steal('can/util', function (can) {
 			// _removed if not used as a steal module_
 
 			//!steal-remove-start
-			if (window.steal) {
+			if ( typeof window !== "undefined" && window.steal && steal.type ) {
 				steal.type(info.suffix + " view js", function (options, success, error) {
 					var type = $view.types["." + options.type],
 						id = $view.toId(options.id + '');
@@ -393,20 +393,41 @@ steal('can/util', function (can) {
 			//!steal-remove-end
 
 			can[info.suffix] = $view[info.suffix] = function (id, text) {
+				var renderer,
+					renderFunc;
 				// If there is no text, assume id is the template text, so return a nameless renderer.
 				if (!text) {
-					// if the template has a fragRenderer already, just return that.
-					if(info.fragRenderer) {
-						return info.fragRenderer(null, id);
-					} else {
-						return makeRenderer(info.renderer(null, id));
-					}
-
+					renderFunc = function(){
+						if(!renderer){
+							// if the template has a fragRenderer already, just return that.
+							if(info.fragRenderer) {
+								renderer = info.fragRenderer(null, id);
+							} else {
+								renderer = makeRenderer(info.renderer(null, id));
+							}
+						}
+						return renderer.apply(this, arguments);
+					};
+					renderFunc.render = function() {
+						var textRenderer = info.renderer(null, id);
+						return textRenderer.apply(textRenderer, arguments);
+					};
+					return renderFunc;
 				}
+				var registeredRenderer = function(){
+					if(!renderer){
+						if(info.fragRenderer) {
+							renderer = info.fragRenderer(id, text);
+						} else {
+							renderer = info.renderer(id, text);
+						}
+					}
+					return renderer.apply(this, arguments);
+				};
 				if(info.fragRenderer) {
-					return $view.preload( id, info.fragRenderer(id, text) );
+					return $view.preload( id, registeredRenderer );
 				} else {
-					return $view.preloadStringRenderer(id, info.renderer(id, text));
+					return $view.preloadStringRenderer(id, registeredRenderer);
 				}
 
 			};
@@ -587,7 +608,7 @@ steal('can/util', function (can) {
 				dataCopy = can.extend({}, data);
 
 				// Add the view request to the list of deferreds.
-				deferreds.push(get(view, true));
+				deferreds.push(getRenderer(view, true));
 				// Wait for the view and all deferreds to finish...
 				can.when.apply(can, deferreds)
 					.then(function (resolved) {
@@ -634,7 +655,7 @@ steal('can/util', function (can) {
 				// If there's a `callback` function
 				async = isFunction(callback);
 				// Get the `view` type
-				deferred = get(view, async);
+				deferred = getRenderer(view, async);
 
 				if (reading) {
 					can.__setReading(reading);
@@ -711,7 +732,7 @@ steal('can/util', function (can) {
 	// _removed if not used as a steal module_
 
 	//!steal-remove-start
-	if (window.steal) {
+	if ( typeof window !== "undefined" && window.steal && steal.type) {
 		//when being used as a steal module, add a new type for 'view' that runs
 		// `can.view.preloadStringRenderer` with the loaded string/text for the dependency.
 		steal.type("view js", function (options, success, error) {

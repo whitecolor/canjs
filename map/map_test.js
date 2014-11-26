@@ -1,7 +1,7 @@
 /* jshint asi:true*/
 steal("can/map", "can/compute", "can/test", "can/list", function(){
 
-	module('can/map');
+	QUnit.module('can/map');
 
 	test("Basic Map", 4, function () {
 
@@ -70,8 +70,8 @@ steal("can/map", "can/compute", "can/test", "can/list", function(){
 		});
 		state.removeAttr("key.with.dots");
 		state2.removeAttr("key.with.someValue");
-		deepEqual(can.Map.keys(state), ["productType"], "one property");
-		deepEqual(can.Map.keys(state2), ["key.with.dots", "key"], "two properties");
+		deepEqual( can.Map.keys(state), ["productType"], "one property");
+		deepEqual( can.Map.keys(state2), ["key.with.dots", "key"], "two properties");
 		deepEqual( can.Map.keys( state2.key["with"] ) , [], "zero properties");
 	});
 
@@ -175,7 +175,7 @@ steal("can/map", "can/compute", "can/test", "can/list", function(){
 
 		testMap.serialize();
 
-		
+
 
 		ok(can.inArray("cats", attributesRead ) !== -1 && can.inArray( "dogs", attributesRead ) !== -1, "map serialization triggered __reading on all attributes");
 		ok(readingTriggeredForKeys, "map serialization triggered __reading for __keys");
@@ -230,13 +230,62 @@ steal("can/map", "can/compute", "can/test", "can/list", function(){
 	test("serializing cycles", function(){
 		var map1 = new can.Map({name: "map1"});
 		var map2 = new can.Map({name: "map2"});
-		
+
 		map1.attr("map2", map2);
 		map2.attr("map1", map1);
-		
+
 		var res = map1.serialize();
 		equal(res.name, "map1");
 		equal(res.map2.name, "map2");
 	});
-	
+
+	test("Unbinding from a map with no bindings doesn't throw an error (#1015)", function() {
+		expect(0);
+
+		var test = new can.Map({});
+
+		try {
+			test.unbind('change');
+		} catch(e) {
+			ok(false, 'No error should be thrown');
+		}
+	});
+
+	test("Fast dispatch event still has target and type (#1082)", 4, function() {
+		var data = new can.Map({
+			name: 'CanJS'
+		});
+
+		data.bind('change', function(ev){
+			equal(ev.type, 'change');
+			equal(ev.target, data);
+		});
+
+		data.bind('name', function(ev){
+			equal(ev.type, 'name');
+			equal(ev.target, data);
+		});
+
+		data.attr('name', 'David');
+	});
+
+	test("map passed to Map constructor (#1166)", function(){
+		var map = new can.Map({x: 1});
+		var res = new can.Map(map);
+		deepEqual(res.attr(), {
+			x: 1
+		}, "has the same properties");
+	});
+
+	test("constructor passed to scope is threated as a property (#1261)", function(){
+		var Constructor = can.Construct.extend({});
+
+		var Map = can.Map.extend({
+		  Todo: Constructor
+		});
+
+		var m = new Map();
+
+		equal(m.attr("Todo"), Constructor);
+	});
 });

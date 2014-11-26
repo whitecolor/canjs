@@ -4,6 +4,7 @@ steal('can/util',
 	'can/view/scanner.js',
 	'can/compute',
 	'can/view/render.js',
+	'can/view/bindings',
 	function (can) {
 
 		// # mustache.js
@@ -34,7 +35,7 @@ steal('can/util',
 			ARG_NAMES = SCOPE + ",options",
 
 			// matches arguments inside a {{ }}
-			argumentsRegExp = /((([^\s]+?=)?('.*?'|".*?"))|.*?)\s/g,
+			argumentsRegExp = /((([^'"\s]+?=)?('.*?'|".*?"))|.*?)\s/g,
 
 			// matches a literal number, string, null or regexp
 			literalNumberStringBooleanRegExp = /^(('.*?'|".*?"|[0-9]+\.?[0-9]*|true|false|null|undefined)|((.+?)=(('.*?'|".*?"|[0-9]+\.?[0-9]*|true|false)|(.+))))$/,
@@ -116,7 +117,7 @@ steal('can/util',
 		 * @add can.MustacheConstructor
 		 */
 		// Put Mustache on the `can` object.
-		can.Mustache = window.Mustache = Mustache;
+		can.Mustache = can.global.Mustache = Mustache;
 
 		/** 
 		 * @prototype
@@ -1358,7 +1359,7 @@ steal('can/util',
 						}
 					}
 				} else if (arg && isLookup(arg)) {
-					args.push(Mustache.get(arg.get, scopeAndOptions, false, true));
+					args.push(Mustache.get(arg.get, scopeAndOptions, false, true, true));
 				} else {
 					args.push(arg);
 				}
@@ -1511,7 +1512,7 @@ steal('can/util',
 		 * @param {Object} context The context to use for checking for a reference if it doesn't exist in the object.
 		 * @param {Boolean} [isHelper] Whether the reference is seen as a helper.
 		 */
-		Mustache.get = function (key, scopeAndOptions, isHelper, isArgument) {
+		Mustache.get = function (key, scopeAndOptions, isHelper, isArgument, isLookup) {
 
 			// Cache a reference to the current context and options, we will use them a bunch.
 			var context = scopeAndOptions.scope.attr('.'),
@@ -1545,16 +1546,17 @@ steal('can/util',
 			can.compute.temporarilyBind(compute);
 
 			// computeData gives us an initial value
-			var initialValue = computeData.initialValue;
+			var initialValue = computeData.initialValue,
+				helperObj = Mustache.getHelper(key, options);
 			  
 			//!steal-remove-start
-			if (initialValue === undefined && !isHelper) {
+			if (initialValue === undefined && !isHelper && !helperObj) {
 				can.dev.warn('can/view/mustache/mustache.js: Unable to find key "' + key + '".');
 			}
 			//!steal-remove-end
 
 			// Use helper over the found value if the found value isn't in the current context
-			if ((initialValue === undefined || computeData.scope !== scopeAndOptions.scope) && Mustache.getHelper(key, options)) {
+			if (!isLookup && (initialValue === undefined || computeData.scope !== scopeAndOptions.scope) && Mustache.getHelper(key, options)) {
 				return key;
 			}
 
@@ -1655,7 +1657,10 @@ steal('can/util',
 		 * Returns a helper given the name.
 		 */
 		Mustache.getHelper = function (name, options) {
-			var helper = options.attr("helpers." + name);
+			var helper;
+			if (options) {
+				helper = options.attr("helpers." + name);
+			}
 			return helper ? {
 				fn: helper
 			} : this._helpers[name];
@@ -1866,10 +1871,7 @@ steal('can/util',
 			 *     {{/unless}}
 			 */
 			'unless': function (expr, options) {
-				var fn = options.fn;
-				options.fn = options.inverse;
-				options.inverse = fn;
-				return Mustache._helpers['if'].fn.apply(this, arguments);
+				return Mustache._helpers['if'].fn.apply(this, [can.isFunction(expr) ? can.compute(function() { return !expr(); }) : !expr, options]);
 			},
 
 			// Implements the `each` built-in helper.
@@ -2056,7 +2058,7 @@ steal('can/util',
 						console.log(expr, options.context);
 					}
 				}
-			}
+			},
 			/**
 			 * @function can.mustache.helpers.elementCallback {{(el)->CODE}}
 			 *
@@ -2119,7 +2121,14 @@ steal('can/util',
 			 *     </ul>
 			 *
 			 */
-			//
+			"@index": function(offset, options) {
+				if (!options) {
+					options = offset;
+					offset = 0;
+				}
+				var index = options.scope.attr("@index");
+				return ""+((can.isFunction(index) ? index() : index) + offset);
+			}
 			/**
 			 * @function can.mustache.helpers.key {{@key}}
 			 *

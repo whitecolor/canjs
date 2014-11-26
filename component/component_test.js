@@ -1,6 +1,6 @@
-steal("can/component", "can/view/stache", function () {
+steal("can/component", "can/view/stache" ,"can/route", function () {
 	
-	module('can/component', {
+	QUnit.module('can/component', {
 		setup: function () {
 			can.remove(can.$("#qunit-test-area>*"));
 		}
@@ -1245,5 +1245,97 @@ steal("can/component", "can/view/stache", function () {
 		can.append(can.$('#qunit-test-area'), template2());
 
 	});
+	
+	test("hyphen-less tag names", function () {
+		var template = can.view.mustache('<span></span><foobar>{{name}}</foobar>');
+		can.Component.extend({
+			tag: "foobar",
+			template: "<div><content/></div>",
+			scope: {
+				name: "Brian"
+			}
+		});
+		can.append(can.$('#qunit-test-area'), template());
+		equal(can.$('#qunit-test-area div')[0].innerHTML, "Brian");
 
+	});
+
+	test('nested component within an #if is not live bound(#1025)', function() {
+		can.Component.extend({
+			tag: 'parent-component',
+			template: can.stache('{{#if shown}}<child-component></child-component>{{/if}}'),
+			scope: {
+				shown: false
+			}
+		});
+
+		can.Component.extend({
+			tag: 'child-component',
+			template: can.stache('Hello world.')
+		});
+
+		var template = can.stache('<parent-component></parent-component>');
+		var frag = template({});
+
+		equal(frag.childNodes[0].innerHTML, '', 'child component is not inserted');
+		can.scope(frag.childNodes[0]).attr('shown', true);
+
+		equal(frag.childNodes[0].childNodes[0].innerHTML, 'Hello world.', 'child component is inserted');
+		can.scope(frag.childNodes[0]).attr('shown', false);
+
+		equal(frag.childNodes[0].innerHTML, '', 'child component is removed');
+	});
+
+	test('component does not update scope on id, class, and data-view-id attribute changes (#1079)', function(){
+		
+		can.Component.extend({
+			tag:'x-app'
+		});
+
+		var frag=can.stache('<x-app></x-app>')({});
+		
+		var el = frag.childNodes[0];
+		var scope = can.scope(el);
+		
+		// element must be inserted, otherwise attributes event will not be fired
+		can.append(can.$("#qunit-test-area"),frag);
+		
+		// update the class
+		can.addClass(can.$(el),"foo");
+		
+		stop();
+		setTimeout(function(){
+			equal(scope.attr('class'),undefined, "the scope is not updated when the class attribute changes");
+			start();
+		},20);
+		
+	});
+
+	test('scope objects with Constructor functions as properties do not get converted (#1261)', 1, function(){
+		stop();
+
+		var Test = can.Map.extend({
+			test: 'Yeah'
+		});
+
+		can.Component.extend({
+			tag:'my-app',
+			scope: {
+				MyConstruct: Test
+			},
+			events: {
+				'{MyConstruct} something': function() {
+					ok(true, 'Event got triggered');
+					start();
+				}
+			}
+		});
+
+		var frag = can.stache('<my-app></my-app>')();
+
+		// element must be inserted, otherwise attributes event will not be fired
+		can.append(can.$("#qunit-test-area"),frag);
+
+		can.trigger(Test, 'something');
+	});
 });

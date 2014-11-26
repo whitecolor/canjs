@@ -34,9 +34,9 @@ steal("can/util", "can/view",function(can){
 	var tag = can.view.tag = function (tagName, tagHandler) {
 		if(tagHandler) {
 			// if we have html5shive ... re-generate
-			if (window.html5) {
-				window.html5.elements += " " + tagName;
-				window.html5.shivDocument();
+			if (can.global.html5) {
+				can.global.html5.elements += " " + tagName;
+				can.global.html5.shivDocument();
 			}
 	
 			tags[tagName.toLowerCase()] = tagHandler;
@@ -60,11 +60,7 @@ steal("can/util", "can/view",function(can){
 		attr: attr,
 		// handles calling back a tag callback
 		tagHandler: function(el, tagName, tagData){
-			var helperTagCallback = tagData.options.read('tags.' + tagName, {
-					isArgument: true,
-					proxyMethods: false
-				})
-					.value,
+			var helperTagCallback = tagData.options.attr('tags.' + tagName),
 				tagCallback = helperTagCallback || tags[tagName];
 	
 			// If this was an element like <foo-bar> that doesn't have a component, just render its content

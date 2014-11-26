@@ -1,6 +1,8 @@
 steal('can/util', "can/view",function (can) {
 
-	var selectsCommentNodes = (function(){
+	var doc = typeof document !== "undefined" ? document: null;
+
+	var selectsCommentNodes = doc && (function(){
 		return can.$(document.createComment('~')).length === 1;
 	})();
 
@@ -13,7 +15,7 @@ steal('can/util', "can/view",function (can) {
 	 */
 	var elements = {
 		tagToContentPropMap: {
-			option: 'textContent' in document.createElement('option') ? 'textContent' : 'innerText',
+			option: ( doc && "textContent" in document.createElement("option") ) ? "textContent" : "innerText",
 			textarea: 'value'
 		},
 		/**
@@ -54,6 +56,7 @@ steal('can/util', "can/view",function (can) {
 		 */
 		tagMap: {
 			'': 'span',
+			colgroup: 'col',
 			table: 'tbody',
 			tr: 'td',
 			ol: 'li',
@@ -66,6 +69,7 @@ steal('can/util', "can/view",function (can) {
 		},
 		// a tag's parent element
 		reverseTagMap: {
+			col: 'colgroup',
 			tr: 'tbody',
 			option: 'select',
 			td: 'tr',
