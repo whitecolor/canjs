@@ -27,17 +27,25 @@ steal("can/test", "steal-qunit", function () {
 		
 	QUnit.module("can/view/autorender");
 	if(window.steal) {
-		asyncTest("the basics are able to work for steal", function(){
-			makeIframe(  can.test.path("view/autorender/tests/steal-basics.html?"+Math.random()) );
+		asyncTest("can-autorender to work for steal", function(){
+			makeIframe(can.test.path("view/autorender/tests/steal-basics.html?"+Math.random()) );
+		});
+		asyncTest("data-can-autorender to work with steal", function(){
+			makeIframe(can.test.path("view/autorender/tests/steal-data-attr.html?"+Math.random()) );
 		});
 	} else if(window.requirejs) {
-		asyncTest("the basics are able to work for requirejs", function(){
+		asyncTest("can-autorender to work for requirejs", function(){
 			makeIframe(can.test.path("../../view/autorender/tests/requirejs-basics.html?"+Math.random()));
 		});
+		asyncTest("data-can-autorender to work with requirejs", function() {
+			makeIframe(can.test.path("../../view/autorender/tests/requirejs-data-attr.html?"+Math.random()));
+		});
 	} else {
-		asyncTest("the basics are able to work standalone", function(){
+		asyncTest("can-autorender to work standalone", function(){
 			makeIframe(can.test.path("view/autorender/tests/standalone-basics.html?"+Math.random()));
 		});
+		asyncTest("data-can-autorender to work standalone", function(){
+			makeIframe(can.test.path("view/autorender/tests/standalone-data-attr.html?"+Math.random()));
+		});
 	}
-
 });
