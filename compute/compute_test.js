@@ -794,4 +794,9 @@ steal("can/compute", "can/test", "can/map", "steal-qunit", function () {
 		
 	});
 
+	test('Calling .unbind() on un-bound compute does not throw an error', function () {
+		var count =  can.compute(0);
+		count.unbind('change');
+		ok(true, 'No error was thrown');
+	});
 });
